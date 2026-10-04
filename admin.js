@@ -35,6 +35,7 @@ let storeData = null;
 let currentSha = null;
 let pendingImages = {};
 let pendingFeatured = [];
+let pendingOffers = {};   // { offerId: File } للصور العروض قيد الرفع
 
 const $ = (id) => document.getElementById(id);
 
@@ -275,6 +276,7 @@ $("reloadBtn").onclick = async () => {
     storeData = await fetchFromGitHub();
     pendingImages = {};
     pendingFeatured = [];
+    pendingOffers = {};
     renderAll();
     showStatus("تم التحديث ✅", "ok");
   } catch (e) {
@@ -289,6 +291,7 @@ $("reloadBtn").onclick = async () => {
 async function saveAll() {
   showLoading("جاري حفظ التعديلات...");
   try {
+    // ١) الصور المميزة
     if (pendingFeatured.length > 0) {
       showLoading(`جاري رفع ${pendingFeatured.length} صورة مميزة...`);
       if (!storeData.featured) storeData.featured = [];
@@ -302,12 +305,32 @@ async function saveAll() {
       pendingFeatured = [];
     }
 
+    // ٢) صور العروض
+    const pendingOffersCount = Object.keys(pendingOffers).length;
+    if (pendingOffersCount > 0) {
+      showLoading(`جاري رفع ${pendingOffersCount} صورة عرض...`);
+      if (!storeData.offers) storeData.offers = [];
+      for (const offerId of Object.keys(pendingOffers)) {
+        const file = pendingOffers[offerId];
+        const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+        const fileName = `offer_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`;
+        const b64 = await compressImage(file);
+        const url = await uploadImageToGitHub(b64, fileName);
+        // حدّد العرض المطلوب وحدّث صورته
+        const offer = storeData.offers.find(o => o.id === offerId);
+        if (offer) offer.image = url;
+      }
+      pendingOffers = {};
+    }
+
+    // ٣) صور المنتجات
     const pendingCount = Object.values(pendingImages).reduce((a, arr) => a + arr.length, 0);
     if (pendingCount > 0) {
       showLoading(`جاري رفع ${pendingCount} صورة منتج...`);
       await uploadAllPendingImages();
     }
 
+    // ٤) حفظ JSON
     showLoading("جاري حفظ البيانات على GitHub...");
     await saveDataToGitHub();
     showStatus("تم الحفظ ✅ التحديث هيظهر خلال دقيقة", "ok");
@@ -355,6 +378,7 @@ async function uploadAllPendingImages() {
 function renderAll() {
   renderConfig();
   renderFeaturedSection();
+  renderOffersSection();
   renderZones();
 }
 
@@ -493,6 +517,179 @@ function renderFeaturedSection() {
   grid.appendChild(addBtn);
   wrap.appendChild(grid);
   wrap.appendChild(fileInput);
+}
+
+// ============================================================
+// 🔥 عرض قسم العروض
+// ============================================================
+function renderOffersSection() {
+  const wrap = $("offersFields");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+
+  if (!storeData.offers || !Array.isArray(storeData.offers)) {
+    storeData.offers = [];
+  }
+
+  // تحديث العداد
+  const counter = $("offersCount");
+  if (counter) counter.textContent = storeData.offers.length + " عرض";
+
+  // ====== نص إرشادي ======
+  const hint = document.createElement("p");
+  hint.style.cssText = "color:var(--text-muted);font-size:0.9rem;margin-bottom:14px;line-height:1.7;font-weight:700";
+  hint.innerHTML = "كل عرض = <strong>صورة</strong> + <strong>نص</strong> (زي: \"ثلاث تيشيرتات بسعر اتنين\"). العرض يظهر في قسم <strong>🔥 عروض وخصومات</strong> في الصفحة الرئيسية، بنفس تأثير Coverflow.";
+  wrap.appendChild(hint);
+
+  // ====== شبكة العروض ======
+  const grid = document.createElement("div");
+  grid.className = "offers-grid";
+
+  storeData.offers.forEach((offer, idx) => {
+    const card = buildOfferCard(offer, idx);
+    grid.appendChild(card);
+  });
+
+  // ====== زر إضافة عرض جديد ======
+  const addOfferBtn = document.createElement("div");
+  addOfferBtn.className = "offer-card";
+  addOfferBtn.style.cssText = "justify-content:center;align-items:center;cursor:pointer;border-style:dashed";
+  addOfferBtn.innerHTML = `
+    <div style="font-size:2.5rem;color:var(--gold-dark)">➕</div>
+    <div style="font-weight:900;color:var(--gold-dark);text-align:center;font-size:0.95rem">إضافة عرض جديد</div>
+  `;
+  addOfferBtn.onclick = () => {
+    storeData.offers.push({
+      id: uid("offer"),
+      image: "",
+      text: ""
+    });
+    renderOffersSection();
+    showStatus("تم إضافة عرض جديد — ارفع صورة واكتب النص 💾", "ok");
+  };
+  grid.appendChild(addOfferBtn);
+
+  wrap.appendChild(grid);
+}
+
+// ============================================================
+// بناء كارت عرض
+// ============================================================
+function buildOfferCard(offer, idx) {
+  const card = document.createElement("div");
+  card.className = "offer-card";
+
+  // رقم العرض
+  const num = document.createElement("div");
+  num.className = "offer-num";
+  num.textContent = "#" + (idx + 1);
+  card.appendChild(num);
+
+  // ====== صورة العرض ======
+  const imgBox = document.createElement("div");
+  imgBox.className = "offer-img-box";
+
+  const pendingFile = pendingOffers[offer.id];
+  if (pendingFile) {
+    // صورة قيد الرفع
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(pendingFile);
+    imgBox.appendChild(img);
+
+    const del = document.createElement("button");
+    del.className = "offer-img-del";
+    del.textContent = "✕";
+    del.onclick = () => {
+      delete pendingOffers[offer.id];
+      renderOffersSection();
+    };
+    imgBox.appendChild(del);
+
+    const badge = document.createElement("div");
+    badge.style.cssText = "position:absolute;bottom:6px;right:6px;background:var(--gold);color:#fff;font-size:0.65rem;padding:3px 8px;border-radius:6px;font-weight:900;z-index:2";
+    badge.textContent = "قيد الرفع";
+    imgBox.appendChild(badge);
+  } else if (offer.image) {
+    // صورة محفوظة
+    const img = document.createElement("img");
+    img.src = offer.image;
+    img.onerror = () => { img.style.opacity = "0.3"; };
+    imgBox.appendChild(img);
+
+    const del = document.createElement("button");
+    del.className = "offer-img-del";
+    del.textContent = "✕";
+    del.onclick = () => {
+      if (!confirm("حذف صورة العرض؟")) return;
+      offer.image = "";
+      renderOffersSection();
+    };
+    imgBox.appendChild(del);
+
+    const changeBtn = document.createElement("button");
+    changeBtn.className = "offer-img-change";
+    changeBtn.textContent = "🔄 تغيير";
+    changeBtn.onclick = () => {
+      const fi = document.createElement("input");
+      fi.type = "file";
+      fi.accept = "image/*";
+      fi.onchange = (e) => {
+        const f = e.target.files[0];
+        if (!f) return;
+        pendingOffers[offer.id] = f;
+        renderOffersSection();
+      };
+      fi.click();
+    };
+    imgBox.appendChild(changeBtn);
+  } else {
+    // صندوق إضافة صورة
+    const addImg = document.createElement("div");
+    addImg.className = "offer-img-add";
+    addImg.innerHTML = `📷<small>إضافة صورة</small>`;
+    addImg.onclick = () => {
+      const fi = document.createElement("input");
+      fi.type = "file";
+      fi.accept = "image/*";
+      fi.onchange = (e) => {
+        const f = e.target.files[0];
+        if (!f) return;
+        pendingOffers[offer.id] = f;
+        renderOffersSection();
+      };
+      fi.click();
+    };
+    imgBox.appendChild(addImg);
+  }
+
+  card.appendChild(imgBox);
+
+  // ====== النص ======
+  const textLbl = document.createElement("div");
+  textLbl.className = "offer-text-label";
+  textLbl.textContent = "📝 نص العرض:";
+  card.appendChild(textLbl);
+
+  const textInput = document.createElement("textarea");
+  textInput.className = "offer-text-input";
+  textInput.placeholder = "مثال: ثلاث تيشيرتات بسعر اتنين";
+  textInput.value = offer.text || "";
+  textInput.oninput = () => { offer.text = textInput.value; };
+  card.appendChild(textInput);
+
+  // ====== زر الحذف ======
+  const delBtn = document.createElement("button");
+  delBtn.className = "offer-del-btn";
+  delBtn.textContent = "🗑️ حذف العرض";
+  delBtn.onclick = () => {
+    if (!confirm("حذف هذا العرض نهائياً؟")) return;
+    delete pendingOffers[offer.id];
+    storeData.offers.splice(idx, 1);
+    renderOffersSection();
+  };
+  card.appendChild(delBtn);
+
+  return card;
 }
 
 // ============================================================
@@ -767,7 +964,7 @@ function buildProductCard(prod, pIdx, cat, rerender) {
 }
 
 // ============================================================
-// 📷 صور المنتج — كل صورة تحتها شرائح ألوان + لون مخصص
+// 📷 صور المنتج
 // ============================================================
 function buildImagesSection(prod, rerender, cat) {
   const wrap = document.createElement("div");
@@ -794,15 +991,11 @@ function buildImagesSection(prod, rerender, cat) {
     return (prod.colors[i] || "").split(/[،,]/).map(s => s.trim()).filter(Boolean);
   }
 
-  // ============================================================
-  // بناء صف الألوان لصورة معينة
-  // ============================================================
   function buildColorRow(imgIdx) {
     const row = document.createElement("div");
     row.className = "img-colors-row";
     const active = colorList(imgIdx);
 
-    // ١) الألوان الأساسية من القسم
     enabledColors.forEach(c => {
       const t = document.createElement("button");
       t.type = "button";
@@ -820,7 +1013,6 @@ function buildImagesSection(prod, rerender, cat) {
       row.appendChild(t);
     });
 
-    // ٢) الألوان المخصصة (اللي مش موجودة في القسم، بس مضافة على الصورة دي)
     const customColors = active.filter(c => !enabledColors.includes(c));
     customColors.forEach(c => {
       const t = document.createElement("button");
@@ -839,7 +1031,6 @@ function buildImagesSection(prod, rerender, cat) {
       row.appendChild(t);
     });
 
-    // ٣) زر "+ لون جديد"
     const addCustomBtn = document.createElement("button");
     addCustomBtn.type = "button";
     addCustomBtn.className = "img-color-tag add-custom";
@@ -859,7 +1050,6 @@ function buildImagesSection(prod, rerender, cat) {
     };
     row.appendChild(addCustomBtn);
 
-    // ٤) زر "الكل" (للألوان الأساسية بس)
     if (enabledColors.length > 1) {
       const allBtn = document.createElement("button");
       allBtn.type = "button";
@@ -876,15 +1066,11 @@ function buildImagesSection(prod, rerender, cat) {
     return row;
   }
 
-  // ============================================================
-  // بناء صف الألوان لصورة قيد الرفع
-  // ============================================================
   function buildPendingColorRow(file) {
     const row = document.createElement("div");
     row.className = "img-colors-row";
     const active = (file.colorNames || []).slice();
 
-    // ١) الألوان الأساسية
     enabledColors.forEach(c => {
       const t = document.createElement("button");
       t.type = "button";
@@ -901,7 +1087,6 @@ function buildImagesSection(prod, rerender, cat) {
       row.appendChild(t);
     });
 
-    // ٢) الألوان المخصصة
     const customColors = active.filter(c => !enabledColors.includes(c));
     customColors.forEach(c => {
       const t = document.createElement("button");
@@ -919,7 +1104,6 @@ function buildImagesSection(prod, rerender, cat) {
       row.appendChild(t);
     });
 
-    // ٣) زر "+ لون جديد"
     const addCustomBtn = document.createElement("button");
     addCustomBtn.type = "button";
     addCustomBtn.className = "img-color-tag add-custom";
@@ -936,7 +1120,6 @@ function buildImagesSection(prod, rerender, cat) {
     };
     row.appendChild(addCustomBtn);
 
-    // ٤) زر "الكل"
     if (enabledColors.length > 1) {
       const allBtn = document.createElement("button");
       allBtn.type = "button";
@@ -953,13 +1136,9 @@ function buildImagesSection(prod, rerender, cat) {
     return row;
   }
 
-  // ============================================================
-  // بناء شبكة الصور
-  // ============================================================
   function renderImgs() {
     grid.innerHTML = "";
 
-    // ١) الصور المحفوظة
     prod.images.forEach((imgUrl, i) => {
       const cell = document.createElement("div");
       cell.className = "img-cell";
@@ -984,7 +1163,6 @@ function buildImagesSection(prod, rerender, cat) {
       grid.appendChild(cell);
     });
 
-    // ٢) الصور قيد الرفع
     const pending = pendingImages[prod.id] || [];
     pending.forEach((file, i) => {
       const cell = document.createElement("div");
@@ -1013,7 +1191,6 @@ function buildImagesSection(prod, rerender, cat) {
       grid.appendChild(cell);
     });
 
-    // ٣) زر الإضافة
     const addBtn = document.createElement("div");
     addBtn.className = "img-add-btn";
     addBtn.innerHTML = `📷<small>إضافة صورة</small>`;
@@ -1219,7 +1396,9 @@ window.addEventListener("online", () => {
 });
 
 window.addEventListener("beforeunload", (e) => {
-  const hasPending = Object.keys(pendingImages).length > 0 || pendingFeatured.length > 0;
+  const hasPending = Object.keys(pendingImages).length > 0
+    || pendingFeatured.length > 0
+    || Object.keys(pendingOffers).length > 0;
   if (hasPending) { e.preventDefault(); e.returnValue = ""; }
 });
 

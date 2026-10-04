@@ -13,6 +13,7 @@
       config: data.config || {},
       social: data.social || {},
       featured: data.featured || [],
+      offers: Array.isArray(data.offers) ? data.offers : [],   // ← جديد
       categories: (data.categories || []).map(function(cat) {
         return {
           id: cat.id,
@@ -21,6 +22,7 @@
           name_en: cat.name_en,
           homeImg: cat.homeImg || '',
           visible: cat.visible !== false,
+          colors: cat.colors || [],
           products: (cat.products || []).map(function(p) {
             return {
               id: p.id,
@@ -38,7 +40,7 @@
     };
 
     localStorage.setItem('maximStoreData', JSON.stringify(converted));
-    console.log('✅ site-data.json loaded:', converted.categories.length, 'categories');
+    console.log('✅ site-data.json loaded:', converted.categories.length, 'categories,', converted.offers.length, 'offers');
 
     window.dispatchEvent(new Event('storeDataReady'));
 
@@ -58,6 +60,7 @@
       },
       social: {},
       featured: [],
+      offers: [],   // ← جديد
       categories: []
     };
     localStorage.setItem('maximStoreData', JSON.stringify(fallback));

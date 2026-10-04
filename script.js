@@ -30,6 +30,7 @@ function loadStoreData() {
     },
     social: {},
     featured: [],
+    offers: [],
     categories: []
   };
 }
@@ -69,8 +70,8 @@ function applySocialLinks() {
   const ttUrl = social.tiktok || "#";
   const tgUrl = social.telegram || "#";
 
-  // ---------- messenger: يدعم m.me/id/name/link كامل ----------
-  let messengerUrl = "https://m.me/100063708167410"; // الافتراضي من الـ ID
+  // ---------- messenger ----------
+  let messengerUrl = "https://m.me/100063708167410";
   const mRaw = (social.messenger || "").trim();
   if (mRaw) {
     if (/m\.me\//i.test(mRaw)) {
@@ -439,48 +440,46 @@ function initCenterSlider(wrap, slider, total, onItemClick) {
 }
 
 // ============================================================
-// عروض وخصومات
+// 🔥 عرض العروض والخصومات (الجديد)
 // ============================================================
 function renderOffersSlider() {
   const slider = document.getElementById("offersSlider");
   if (!slider) return;
+
+  const section = slider.closest(".home-section");
   const wrap = slider.parentElement;
+
   destroySlider(wrap);
   if (!wrap.classList.contains("slider-wrap")) wrap.classList.add("slider-wrap");
   slider.innerHTML = "";
 
-  const cats = (STORE_DATA.categories || []).filter(c => c.visible !== false);
-  if (cats.length === 0) {
-    slider.innerHTML = '<p class="empty-note">لا توجد أقسام حالياً</p>';
+  const offers = (STORE_DATA.offers || []).filter(o => o && (o.image || o.text));
+
+  // لو مفيش عروض — نخفي القسم بالكامل
+  if (offers.length === 0) {
+    if (section) section.style.display = "none";
     return;
   }
+  if (section) section.style.display = "";
 
-  cats.forEach(cat => {
-    const img = cat.homeImg || (cat.products && cat.products[0] && cat.products[0].images[0]) || "";
-    const hasOffer = (cat.products || []).some(p => (p.sizes || []).some(s => isOfferActive(s)));
-
+  offers.forEach((offer, idx) => {
     const item = document.createElement("div");
     item.className = "slider-item offer-slide";
+
+    const imgSrc = offer.image || "";
+    const txt = (offer.text || "").trim();
+
     item.innerHTML = `
-      ${img ? `<img src="${img}" alt="${cat.name_ar}" loading="lazy">` : ""}
-      <span class="cat-card-shade"></span>
-      ${hasOffer ? '<span class="offer-badge">عرض خاص</span>' : ""}
-      <span class="cat-card-text">
-        <span class="cat-card-ar">${cat.icon || ""} ${cat.name_ar}</span>
-        <span class="cat-card-en">${cat.name_en || ""}</span>
-      </span>
+      ${imgSrc
+        ? `<img src="${imgSrc}" alt="عرض ${idx + 1}" loading="lazy" onerror="this.style.opacity=0.3">`
+        : '<div class="offer-img-fallback">🔥</div>'}
+      ${txt ? `<div class="offer-text-box">${txt}</div>` : ""}
     `;
     slider.appendChild(item);
   });
 
-  addDots(wrap, cats.length);
-  initCenterSlider(wrap, slider, cats.length, (idx) => openCategory(cats[idx].id));
-}
-
-function isOfferActive(size) {
-  const price = Number(size.price) || 0;
-  const offer = Number(size.offerPrice) || 0;
-  return offer > 0 && offer < price;
+  addDots(wrap, offers.length);
+  initCenterSlider(wrap, slider, offers.length, null);
 }
 
 // ============================================================

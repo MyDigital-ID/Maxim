@@ -708,7 +708,6 @@ main {
 
 .product-card { position: relative; }
 .card-offer-badge { top: 8px; right: 8px; }
-.offer-slide { position: relative; }
 
 .pc-size-btn.has-offer { border-color: var(--danger); }
 .pc-old-price {
@@ -719,6 +718,102 @@ main {
 .pc-offer-price { color: var(--danger); font-weight: 900; }
 .pc-size-btn.selected .pc-old-price,
 .pc-size-btn.selected .pc-offer-price { color: #fff; }
+
+/* ============================================================
+   🔥 قسم العروض والخصومات — كارت بصورة + مستطيل نصي
+============================================================ */
+.slider-wrap .slider-item.offer-slide,
+.slider-track .slider-item.offer-slide {
+  width: 62%;
+  max-width: 260px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0;
+  transition-property: transform, box-shadow, border-color;
+}
+
+.slider-wrap .slider-item.offer-slide.swiper-slide-active {
+  border-color: var(--orange);
+  box-shadow: 0 14px 36px rgba(226, 96, 31, 0.3);
+}
+
+.offer-slide > img {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* fallback لو مفيش صورة */
+.offer-img-fallback {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, var(--surface-2), var(--surface));
+  color: var(--orange);
+  pointer-events: none;
+}
+
+/* المستطيل النصي */
+.offer-text-box {
+  flex: 0 0 auto;
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--orange-hi) 100%);
+  color: #fff;
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-weight: 900;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  padding: 14px 14px;
+  text-align: center;
+  min-height: 72px;
+  max-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+  overflow-y: auto;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+
+@media (max-width: 500px) {
+  .slider-wrap .slider-item.offer-slide,
+  .slider-track .slider-item.offer-slide {
+    width: 75%;
+    height: 300px;
+  }
+  .offer-text-box {
+    font-size: 0.85rem;
+    padding: 12px 12px;
+    min-height: 64px;
+  }
+}
+
+@media (max-width: 380px) {
+  .slider-wrap .slider-item.offer-slide,
+  .slider-track .slider-item.offer-slide {
+    width: 78%;
+    height: 270px;
+  }
+  .offer-text-box {
+    font-size: 0.78rem;
+    padding: 10px 10px;
+    min-height: 58px;
+  }
+}
 
 /* ============================================================
    Category view + products
@@ -1293,14 +1388,6 @@ main {
   .cat-card-ar { font-size: 0.95rem; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 /* ============================================================
    Brand overrides — Maxim
 ============================================================ */
@@ -1636,5 +1723,10 @@ body { padding-bottom: 84px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
   .splash-screen *, .splash-screen *::before { animation-delay: 0s !important; }
 }
