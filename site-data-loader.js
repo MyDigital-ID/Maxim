@@ -1,6 +1,5 @@
 // ============================================================
 // Maxim Casual Wear - Data Loader
-// يحمّل site-data.json ويحوّله للصيغة اللي script.js بيفهمها
 // ============================================================
 
 (async function loadSiteData() {
@@ -13,7 +12,7 @@
       config: data.config || {},
       social: data.social || {},
       featured: data.featured || [],
-      offers: Array.isArray(data.offers) ? data.offers : [],   // ← جديد
+      offers: Array.isArray(data.offers) ? data.offers : [],
       categories: (data.categories || []).map(function(cat) {
         return {
           id: cat.id,
@@ -39,7 +38,8 @@
       })
     };
 
-    localStorage.setItem('maximStoreData', JSON.stringify(converted));
+    // ←←← اسم المفتاح الجديد (v2)
+    localStorage.setItem('maximStoreData_v2', JSON.stringify(converted));
     console.log('✅ site-data.json loaded:', converted.categories.length, 'categories,', converted.offers.length, 'offers');
 
     window.dispatchEvent(new Event('storeDataReady'));
@@ -60,10 +60,10 @@
       },
       social: {},
       featured: [],
-      offers: [],   // ← جديد
+      offers: [],
       categories: []
     };
-    localStorage.setItem('maximStoreData', JSON.stringify(fallback));
+    localStorage.setItem('maximStoreData_v2', JSON.stringify(fallback));
     window.dispatchEvent(new Event('storeDataReady'));
   }
 })();

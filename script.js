@@ -11,7 +11,7 @@ let currentCategory = null;
 // تحميل البيانات
 // ============================================================
 function loadStoreData() {
-  const saved = localStorage.getItem("maximStoreData");
+  const saved = localStorage.getItem("maximStoreData_v2");
   if (saved) {
     try {
       return JSON.parse(saved);
@@ -35,17 +35,11 @@ function loadStoreData() {
   };
 }
 
-// ============================================================
-// قائمة الألوان الافتراضية
-// ============================================================
 const DEFAULT_PALETTE = [
   "أبيض", "أسود", "بني", "بيج فاتح", "بيج", "أزرق", "لبني",
   "أخضر", "زيتي", "أحمر", "أصفر", "رمادي", "كحلي", "برتقالي"
 ];
 
-// ============================================================
-// إشارة التحميل
-// ============================================================
 window.addEventListener('storeDataReady', () => {
   console.log("🔔 إشارة storeDataReady وصلت");
   STORE_DATA = loadStoreData();
@@ -57,7 +51,7 @@ window.addEventListener('storeDataReady', () => {
 });
 
 // ============================================================
-// تطبيق روابط التواصل الاجتماعي
+// Social
 // ============================================================
 function applySocialLinks() {
   const social = STORE_DATA.social || {};
@@ -70,7 +64,6 @@ function applySocialLinks() {
   const ttUrl = social.tiktok || "#";
   const tgUrl = social.telegram || "#";
 
-  // ---------- messenger ----------
   let messengerUrl = "https://m.me/100063708167410";
   const mRaw = (social.messenger || "").trim();
   if (mRaw) {
@@ -118,7 +111,7 @@ function applySocialLinks() {
 }
 
 // ============================================================
-// تطبيق الإعدادات
+// Config
 // ============================================================
 function applyConfig() {
   const cfg = STORE_DATA.config || {};
@@ -150,7 +143,7 @@ function applyConfig() {
 }
 
 // ============================================================
-// القائمة الجانبية
+// Side Menu
 // ============================================================
 const sideMenu = document.getElementById("sideMenu");
 const sideOverlay = document.getElementById("sideOverlay");
@@ -197,7 +190,7 @@ const brandHome = document.getElementById("brandHome");
 if (brandHome) brandHome.addEventListener("click", showHome);
 
 // ============================================================
-// التنقل
+// Navigation
 // ============================================================
 const viewHome = document.getElementById("view-home");
 const viewCategory = document.getElementById("view-category");
@@ -252,7 +245,7 @@ function goBack() {
 }
 
 // ============================================================
-// عرض الأقسام
+// Categories
 // ============================================================
 function renderCategories() {
   const grid = document.getElementById("catsGrid");
@@ -289,7 +282,7 @@ function renderCategories() {
 }
 
 // ============================================================
-// عرض الصور المميزة
+// Featured
 // ============================================================
 function renderFeatured() {
   const wrap = document.getElementById("featuredSlider").parentElement;
@@ -440,7 +433,9 @@ function initCenterSlider(wrap, slider, total, onItemClick) {
 }
 
 // ============================================================
-// 🔥 عرض العروض والخصومات (الجديد)
+// 🔥 العروض والخصومات — قسم مستقل تماماً
+// - لو مفيش عروض → القسم كامل يختفي
+// - لو فيه عروض → صورة + مستطيل نصي (مفيش فتح أقسام)
 // ============================================================
 function renderOffersSlider() {
   const slider = document.getElementById("offersSlider");
@@ -455,7 +450,7 @@ function renderOffersSlider() {
 
   const offers = (STORE_DATA.offers || []).filter(o => o && (o.image || o.text));
 
-  // لو مفيش عروض — نخفي القسم بالكامل
+  // مفيش عروض — نخفي القسم بالكامل
   if (offers.length === 0) {
     if (section) section.style.display = "none";
     return;
@@ -479,11 +474,18 @@ function renderOffersSlider() {
   });
 
   addDots(wrap, offers.length);
+  // ← مفيش onItemClick — العروض للعرض فقط
   initCenterSlider(wrap, slider, offers.length, null);
 }
 
+function isOfferActive(size) {
+  const price = Number(size.price) || 0;
+  const offer = Number(size.offerPrice) || 0;
+  return offer > 0 && offer < price;
+}
+
 // ============================================================
-// فتح قسم
+// Open Category
 // ============================================================
 function openCategory(catId, skipHistory) {
   const cat = STORE_DATA.categories.find(c => c.id === catId);
@@ -513,7 +515,7 @@ function openCategory(catId, skipHistory) {
 }
 
 // ============================================================
-// عرض المنتجات
+// Products
 // ============================================================
 function renderProducts(cat) {
   const list = document.getElementById("productsList");
@@ -532,9 +534,6 @@ function renderProducts(cat) {
   });
 }
 
-// ============================================================
-// بناء كارت المنتج
-// ============================================================
 function buildProductCard(prod, cat) {
   const card = document.createElement("div");
   card.className = "product-card";
@@ -608,7 +607,6 @@ function buildProductCard(prod, cat) {
     </button>
   `;
 
-  // ============ منطق اختيار اللون والصور ============
   let selectedColorIdx = 0;
   let selectedColorName = allColors[0] || "";
 
@@ -651,7 +649,6 @@ function buildProductCard(prod, cat) {
     });
   }
 
-  // ============ المقاسات ============
   const sizeBtns = card.querySelectorAll(".pc-size-btn");
   const addBtn = card.querySelector(".pc-add-btn");
   const selInfo = card.querySelector(".pc-selected-info");
@@ -694,9 +691,6 @@ function buildProductCard(prod, cat) {
   return card;
 }
 
-// ============================================================
-// معرض صور المنتج
-// ============================================================
 function setupProductGallery(card, prod, images, onChange) {
   const box = card.querySelector(".pc-img-box");
   const img = card.querySelector(".pc-img");
@@ -742,7 +736,7 @@ function setupProductGallery(card, prod, images, onChange) {
 }
 
 // ============================================================
-// زر "تسوق الآن"
+// Hero CTA
 // ============================================================
 const heroCta = document.getElementById("heroCta");
 if (heroCta) {
@@ -759,7 +753,7 @@ if (brandHome) {
 }
 
 // ============================================================
-// أزرار الرجوع والرئيسية
+// Back/Home
 // ============================================================
 const backBtnCategory = document.getElementById("backBtnCategory");
 if (backBtnCategory) backBtnCategory.addEventListener("click", goBack);
@@ -774,7 +768,7 @@ if (backBtnCategory) backBtnCategory.addEventListener("click", goBack);
 });
 
 // ============================================================
-// السلة
+// Cart
 // ============================================================
 const cartDrawer = document.getElementById("cartDrawer");
 const cartOverlay = document.getElementById("cartOverlay");
@@ -809,9 +803,6 @@ if (confirmOrderBtn) {
 const addMoreBtn = document.getElementById("addMoreBtn");
 if (addMoreBtn) addMoreBtn.addEventListener("click", closeCartDrawer);
 
-// ============================================================
-// إضافة/حذف من السلة
-// ============================================================
 function addToCart(line) {
   line.id = "c" + (cartLineId++);
   cart.push(line);
@@ -856,9 +847,6 @@ function renderCart() {
   updateConfirmButtonStates();
 }
 
-// ============================================================
-// بناء نص الطلب
-// ============================================================
 function buildOrderText() {
   if (cart.length === 0) return "";
   let msg = "🛍️ *طلب جديد من Maxim Casual Wear*\n\n";
@@ -873,9 +861,6 @@ function buildOrderText() {
   return msg;
 }
 
-// ============================================================
-// واتساب
-// ============================================================
 const sendWhatsappBtn = document.getElementById("sendWhatsappBtn");
 if (sendWhatsappBtn) {
   sendWhatsappBtn.addEventListener("click", () => {
@@ -887,9 +872,6 @@ if (sendWhatsappBtn) {
   });
 }
 
-// ============================================================
-// ماسنجر
-// ============================================================
 const sendMessengerBtn = document.getElementById("sendMessengerBtn");
 if (sendMessengerBtn) {
   sendMessengerBtn.addEventListener("click", (e) => {
@@ -918,7 +900,7 @@ function updateConfirmButtonStates() {
 }
 
 // ============================================================
-// History / Back
+// History
 // ============================================================
 function applyState(state) {
   if (!state || state.view === "home") {
@@ -962,7 +944,7 @@ function tryDeepLink() {
 window.addEventListener("storeDataReady", tryDeepLink);
 
 // ============================================================
-// Install Prompt (PWA)
+// Install Prompt
 // ============================================================
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt", (e) => {
@@ -998,7 +980,7 @@ if (installLaterBtn) {
 }
 
 // ============================================================
-// Splash Screen
+// Splash
 // ============================================================
 (function () {
   const splash = document.getElementById("splashScreen");
@@ -1026,7 +1008,7 @@ renderCart();
 tryDeepLink();
 
 // ============================================================
-// Splash — ضبط مكان نقطة حرف i
+// Splash dot
 // ============================================================
 function placeSplashDot() {
   const wm = document.querySelector(".splash-wordmark");
@@ -1052,7 +1034,4 @@ function placeSplashDot() {
 placeSplashDot();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeSplashDot);
 
-// ============================================================
-// تم ✅
-// ============================================================
 console.log("🛍️ Maxim store loaded");
