@@ -217,12 +217,20 @@
           "images": [
             "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80",
             "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&q=80",
-            "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&q=80"
+            "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&q=80",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/ts4_1791125067839_nop3.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/ts4_1791125071631_9zkg.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/ts4_1791125074778_5fms.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/ts4_1791125077404_hg7n.jpg"
           ],
           "colors": [
             "لبني",
             "كحلي",
-            "أبيض"
+            "أبيض",
+            "أسود",
+            "أحمر",
+            "لبني",
+            "بيج فاتح"
           ],
           "sizes": [
             {
