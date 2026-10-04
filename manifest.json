@@ -1,0 +1,26 @@
+{
+  "name": "Maxim Casual Wear",
+  "short_name": "Maxim",
+  "description": "إختيارك ل Maxim .. إختيار الجوده و الشياكه — أزياء رجالية كاجوال",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#17100c",
+  "theme_color": "#e2601f",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "assets/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

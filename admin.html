@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<base href="./">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم Maxim Casual Wear</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&family=Tajawal:wght@400;500;700;900&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5B301;
+    --gold-light: #FFD54F;
+    --gold-dark: #E6A800;
+    --orange: #E67E22;
+    --orange-dark: #D35400;
+    --marble-dark: #3A3A3A;
+    --marble-mid: #4A4A4A;
+    --marble-light: #5A5A5A;
+    --marble-cream: #F5F3EF;
+    --panel: #FFFFFF;
+    --panel-2: #F9F7F4;
+    --border: #E0DCD5;
+    --text-dark: #1A1A1A;
+    --text-muted: #6A6A6A;
+    --danger: #E74C3C;
+    --success: #27AE60;
+    --shadow: rgba(0, 0, 0, 0.12);
+    --shadow-strong: rgba(0, 0, 0, 0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Tajawal', 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #E8E4DE, #D3CFC8);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text-dark);
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  /* ============ Login ============ */
+  .login-wrap {
+    max-width: 440px;
+    margin: 8vh auto;
+    background: var(--panel);
+    border: 4px solid var(--gold);
+    border-radius: 24px;
+    padding: 36px 28px;
+    text-align: center;
+    box-shadow: 0 20px 60px var(--shadow-strong);
+  }
+  .login-wrap h1 {
+    font-family: 'Lalezar', 'Cairo', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--gold);
+    margin-bottom: 8px;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 0 var(--gold-dark), 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  .login-wrap .subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .login-wrap .pw-wrap { position: relative; margin-bottom: 16px; }
+  .login-wrap input {
+    width: 100%;
+    padding: 16px 16px 16px 56px;
+    border: 3px solid var(--border);
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    background: var(--panel-2);
+    color: var(--text-dark);
+    transition: border-color 0.2s;
+  }
+  .login-wrap input:focus { outline: none; border-color: var(--gold); background: #FFFFFF; }
+  .toggle-pw {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    background: transparent; border: none; font-size: 1.4rem; cursor: pointer;
+    padding: 8px; border-radius: 8px;
+  }
+  .toggle-pw:hover { background: rgba(245, 179, 1, 0.15); }
+  #loginErr {
+    color: var(--danger); font-size: 0.9rem; margin-top: 12px;
+    min-height: 22px; font-weight: 700;
+  }
+  .login-hint {
+    color: var(--text-muted); font-size: 0.8rem; margin-top: 20px;
+    line-height: 1.6;
+  }
+
+  /* ============ Buttons ============ */
+  button {
+    font-family: inherit; cursor: pointer; border: none; border-radius: 12px;
+    padding: 14px 22px; font-weight: 900; font-size: 1rem;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+  }
+  button:active { transform: scale(0.97); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #FFFFFF;
+    box-shadow: 0 6px 20px rgba(245, 179, 1, 0.4);
+    font-size: 1.05rem;
+  }
+  .btn-primary:hover:not(:disabled) {
+    box-shadow: 0 10px 28px rgba(245, 179, 1, 0.55);
+    transform: translateY(-2px);
+  }
+  .btn-secondary {
+    background: var(--panel-2); color: var(--text-dark);
+    border: 2px solid var(--border);
+  }
+  .btn-secondary:hover { background: #FFFFFF; border-color: var(--gold); }
+  .btn-danger {
+    background: transparent; color: var(--danger);
+    border: 2px solid var(--danger); padding: 8px 14px; font-size: 0.85rem;
+  }
+  .btn-add {
+    background: transparent; color: var(--gold-dark);
+    border: 3px dashed var(--gold); width: 100%;
+    padding: 16px; font-size: 1rem; margin-top: 12px; border-radius: 14px;
+  }
+  .btn-add:hover { background: rgba(245, 179, 1, 0.08); }
+
+  /* ============ Main ============ */
+  #dashboard { max-width: 950px; margin: 0 auto; display: none; }
+  #dashboard.active { display: block; }
+
+  /* ============ Header ============ */
+  .admin-header {
+    background: var(--panel);
+    border: 4px solid var(--gold);
+    border-radius: 20px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 14px;
+    box-shadow: 0 10px 30px var(--shadow);
+    position: sticky; top: 12px; z-index: 50;
+  }
+  .admin-header h1 {
+    font-family: 'Lalezar', 'Cairo', sans-serif;
+    font-size: 1.8rem; font-weight: 400;
+    color: var(--gold); letter-spacing: 2px; margin: 0;
+    text-shadow: 0 2px 0 var(--gold-dark);
+  }
+  .admin-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ============ Cards ============ */
+  .card {
+    background: var(--panel);
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    padding: 22px; margin-bottom: 18px;
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+  .card-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.25rem; font-weight: 900;
+    color: var(--marble-dark);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; margin-bottom: 16px; padding-bottom: 14px;
+    border-bottom: 3px solid var(--border);
+  }
+  .card-title .title-info {
+    display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer;
+  }
+  .card-title .zone-icon { font-size: 1.6rem; }
+  .card-title .toggle-chev {
+    font-size: 1rem; transition: transform 0.2s; color: var(--text-muted);
+  }
+  .card-title .toggle-chev.open { transform: rotate(180deg); }
+  .type-badge {
+    font-size: 0.8rem;
+    background: var(--panel-2); color: var(--text-muted);
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 4px 12px; font-weight: 900;
+  }
+  .zone-body { display: none; }
+  .zone-body.open { display: block; }
+
+  /* ============ Form Fields ============ */
+  label {
+    display: block; font-size: 0.9rem; color: var(--marble-mid);
+    margin-bottom: 6px; margin-top: 14px; font-weight: 900;
+    letter-spacing: 0.3px;
+  }
+  input[type=text], input[type=number], textarea {
+    width: 100%; background: var(--panel-2);
+    border: 3px solid var(--border); color: var(--text-dark);
+    border-radius: 12px; padding: 14px 16px;
+    font-family: inherit; font-size: 1rem; font-weight: 600;
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus {
+    outline: none; border-color: var(--gold); background: #FFFFFF;
+  }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* ============ Product Box ============ */
+  .item-box {
+    background: var(--panel-2);
+    border: 3px solid var(--border);
+    border-radius: 16px; padding: 18px; margin-top: 14px;
+    position: relative;
+  }
+  .item-box .item-num {
+    position: absolute; top: 12px; left: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #FFFFFF; font-size: 0.85rem; font-weight: 900;
+    padding: 5px 14px; border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(245, 179, 1, 0.3);
+  }
+  .item-actions {
+    display: flex; gap: 8px; position: absolute;
+    top: 12px; right: 12px;
+  }
+
+  /* ============ Images Grid ============ */
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .img-cell { display: flex; flex-direction: column; gap: 6px; }
+  .img-thumb {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border: 3px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #F0F0F0;
+    transition: border-color 0.2s;
+  }
+  .img-thumb:hover { border-color: var(--gold); }
+  .img-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .img-thumb .img-del {
+    position: absolute; top: 6px; right: 6px;
+    background: var(--danger); color: #FFFFFF;
+    border: none; width: 30px; height: 30px;
+    border-radius: 50%; font-size: 0.9rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 3px 8px rgba(231, 76, 60, 0.5);
+  }
+  .img-add-btn {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px;
+    aspect-ratio: 1 / 1;
+    border: 3px dashed var(--gold); border-radius: 14px;
+    background: rgba(245, 179, 1, 0.05);
+    color: var(--gold-dark); font-size: 2rem;
+    cursor: pointer; font-weight: 900;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .img-add-btn:hover {
+    background: rgba(245, 179, 1, 0.15);
+    transform: scale(1.02);
+  }
+  .img-add-btn small { font-size: 0.85rem; font-weight: 900; }
+  input[type="file"] { display: none; }
+
+  /* ============ محرر ألوان القسم ============ */
+  .cat-colors-editor {
+    background: #FFFDF5;
+    border: 3px dashed var(--gold);
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0 8px;
+  }
+  .cat-colors-editor > label {
+    margin-top: 0;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--marble-dark);
+    font-size: 1rem;
+  }
+  .cat-colors-hint {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+  .color-chips-wrap {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+  }
+  .color-chip-btn {
+    padding: 8px 14px;
+    border: 2.5px solid var(--border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--text-dark);
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .color-chip-btn:hover { border-color: var(--gold); }
+  .color-chip-btn.on {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff;
+    border-color: var(--gold-dark);
+    box-shadow: 0 3px 10px rgba(245, 179, 1, 0.35);
+  }
+  .color-chip-btn.off {
+    opacity: 0.45;
+    text-decoration: line-through;
+  }
+
+  /* ============ شرائح ألوان تحت كل صورة ============ */
+  .img-colors-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+  }
+  .img-color-tag {
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.12s;
+    line-height: 1.2;
+  }
+  .img-color-tag:hover { border-color: var(--gold); }
+  .img-color-tag.on {
+    background: var(--gold);
+    border-color: var(--gold-dark);
+    color: #fff;
+  }
+  .img-color-tags-all-btn {
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1.5px dashed var(--gold);
+    background: transparent;
+    color: var(--gold-dark);
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 900;
+    cursor: pointer;
+    line-height: 1.2;
+  }
+  .img-color-tags-all-btn:hover { background: rgba(245, 179, 1, 0.1); }
+
+  /* ============ Sizes ============ */
+  .size-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .size-chip {
+    background: #FFFFFF; color: var(--text-dark);
+    border: 3px solid var(--border); padding: 10px 18px;
+    border-radius: 12px; font-size: 0.95rem; font-weight: 900;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .size-chip:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .size-chip.selected {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #FFFFFF; border-color: var(--gold-dark);
+    box-shadow: 0 4px 12px rgba(245, 179, 1, 0.4);
+  }
+  .selected-sizes {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-top: 14px; padding: 16px;
+    background: #FFFFFF; border-radius: 12px;
+    border: 3px solid var(--border); min-height: 60px;
+  }
+  .selected-size-row {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 10px; padding: 10px 12px;
+    background: var(--panel-2); border-radius: 10px;
+    border-right: 5px solid var(--gold);
+  }
+  .selected-size-row .sz-label {
+    flex: 1; font-weight: 900; font-size: 1.05rem;
+    color: var(--marble-dark);
+  }
+  .selected-size-row .sz-price-input {
+    width: 110px; padding: 10px;
+    border: 2px solid var(--border); border-radius: 8px;
+    font-family: inherit; font-weight: 900; font-size: 1rem;
+    text-align: center; background: #FFFFFF;
+  }
+  .selected-size-row .sz-price-input:focus {
+    outline: none; border-color: var(--gold);
+  }
+  .selected-size-row .sz-del {
+    background: var(--danger); color: #FFFFFF;
+    border: none; width: 34px; height: 34px;
+    border-radius: 50%; font-size: 0.95rem; font-weight: 900;
+    cursor: pointer; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+  }
+
+  /* ============ Status Toast ============ */
+  #statusMsg {
+    position: fixed; bottom: 20px; right: 20px; left: 20px;
+    max-width: 440px; margin: 0 auto;
+    background: #FFFFFF; border: 4px solid var(--border);
+    border-radius: 16px; padding: 18px 24px;
+    text-align: center; font-weight: 900; font-size: 1rem;
+    display: none; z-index: 100;
+    box-shadow: 0 15px 40px var(--shadow-strong);
+  }
+  #statusMsg.show { display: block; }
+  #statusMsg.ok { border-color: var(--success); color: var(--success); }
+  #statusMsg.err { border-color: var(--danger); color: var(--danger); }
+  #statusMsg.loading { border-color: var(--gold); color: var(--gold-dark); }
+
+  /* ============ Loading Overlay ============ */
+  #loadingOverlay {
+    position: fixed; inset: 0;
+    background: rgba(58, 58, 58, 0.85);
+    display: none; align-items: center; justify-content: center;
+    z-index: 200; backdrop-filter: blur(6px);
+  }
+  #loadingOverlay.show { display: flex; }
+  .loader {
+    background: #FFFFFF; padding: 32px 42px;
+    border-radius: 20px; text-align: center;
+    border: 4px solid var(--gold);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    max-width: 340px;
+  }
+  .loader .spinner {
+    width: 50px; height: 50px;
+    border: 5px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%; margin: 0 auto 18px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader p {
+    font-weight: 900; color: var(--marble-dark);
+    font-size: 1rem; line-height: 1.5;
+  }
+
+  /* ============ Visibility Toggle ============ */
+  .vis-toggle {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--panel-2); padding: 8px 14px;
+    border-radius: 20px; font-size: 0.85rem;
+    font-weight: 900; color: var(--text-muted);
+    cursor: pointer; border: 3px solid var(--border);
+    user-select: none; transition: all 0.2s;
+  }
+  .vis-toggle.on {
+    background: rgba(39, 174, 96, 0.1);
+    border-color: var(--success); color: var(--success);
+  }
+  .vis-toggle.off {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: var(--danger); color: var(--danger);
+  }
+
+  /* ============ Save Bar ============ */
+  .save-bar {
+    position: sticky; bottom: 16px;
+    background: #FFFFFF; border: 4px solid var(--gold);
+    border-radius: 20px; padding: 16px; margin-top: 20px;
+    box-shadow: 0 -8px 30px var(--shadow-strong);
+    z-index: 40;
+  }
+  .save-bar button { width: 100%; padding: 20px; font-size: 1.15rem; }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 600px) {
+    body { padding: 8px; font-size: 15px; }
+    .admin-header { padding: 16px; gap: 10px; }
+    .admin-header h1 { font-size: 1.5rem; }
+    .admin-actions { width: 100%; justify-content: stretch; }
+    .admin-actions button { flex: 1; padding: 12px 14px; font-size: 0.9rem; }
+    .card { padding: 18px; }
+    .item-box { padding: 14px; }
+    .row-2 { grid-template-columns: 1fr; }
+    .selected-size-row .sz-price-input { width: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Login Screen ============ -->
+<div id="loginScreen" class="login-wrap">
+  <h1>Maxim</h1>
+  <p class="subtitle">لوحة تحكم المتجر</p>
+
+  <div class="pw-wrap" style="margin-bottom:10px;">
+    <input type="text" id="ownerInput" placeholder="اسم المستخدم/المنظمة في GitHub (مثال: Maxim-Store)" autocomplete="off">
+  </div>
+  <div class="pw-wrap" style="margin-bottom:10px;">
+    <input type="text" id="repoInput" placeholder="اسم الريبو (مثال: Retail)" autocomplete="off">
+  </div>
+  <div class="pw-wrap" style="margin-bottom:10px;">
+    <input type="text" id="folderInput" placeholder="اسم الفولدر داخل الريبو (اتركه فاضي لو الملفات في الجذر مباشرة)" autocomplete="off">
+  </div>
+
+  <div class="pw-wrap">
+    <input type="password" id="pwInput" placeholder="أدخل رمز الدخول (GitHub Token)" autocomplete="off">
+    <button type="button" id="togglePw" class="toggle-pw">👁️</button>
+  </div>
+
+  <button class="btn-primary" style="width:100%;" id="loginBtn">🔓 دخول</button>
+  <div id="loginErr"></div>
+  <p class="login-hint">
+    أول 3 خانات بتحدد مكان الريبو بتاعك على GitHub بالظبط، وهتتحفظ في المتصفح ده عشان متكتبهاش كل مرة<br>
+    التوكن سيتم حفظه في المتصفح هذا فقط
+  </p>
+</div>
+
+<!-- ============ Loading Overlay ============ -->
+<div id="loadingOverlay">
+  <div class="loader">
+    <div class="spinner"></div>
+    <p id="loadingText">جاري التحميل...</p>
+  </div>
+</div>
+
+<!-- ============ Dashboard ============ -->
+<div id="dashboard">
+
+  <header class="admin-header">
+    <h1>🎛️ لوحة تحكم Maxim</h1>
+    <div class="admin-actions">
+      <button class="btn-secondary" id="reloadBtn">↻ تحديث</button>
+      <button class="btn-primary" id="saveBtn">💾 حفظ</button>
+      <button class="btn-secondary" id="logoutBtn">🔑 خروج</button>
+    </div>
+  </header>
+
+  <!-- Config Section -->
+  <div class="card">
+    <div class="card-title">
+      <span class="title-info">
+        <span class="zone-icon">⚙️</span>
+        <span>الإعدادات العامة</span>
+      </span>
+    </div>
+    <div id="configFields"></div>
+  </div>
+
+  <!-- Featured Section -->
+  <div class="card">
+    <div class="card-title">
+      <span class="title-info">
+        <span class="zone-icon">⭐</span>
+        <span>الصور المميزة (سلايدر)</span>
+      </span>
+    </div>
+    <div id="featuredFields"></div>
+  </div>
+
+  <!-- Zones -->
+  <div id="zonesWrap"></div>
+
+  <button class="btn-add" id="addZoneBtn">+ إضافة قسم جديد</button>
+
+  <!-- Save Bar -->
+  <div class="save-bar">
+    <button class="btn-primary" id="saveBtnBottom">💾 حفظ كل التعديلات</button>
+  </div>
+
+</div>
+
+<div id="statusMsg"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>
