@@ -31,7 +31,13 @@
     "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=800&q=80",
     "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80"
   ],
-  "offers": [],
+  "offers": [
+    {
+      "id": "offer_1791141573029_9s3a",
+      "image": "https://mydigital-id.github.io/Maxim/assets/uploads/offer_1791141814595_mtdb.jpg",
+      "text": "الجمعه ١٦ أكتوبر .. خصم ٢٥% على قسم الموتشي"
+    }
+  ],
   "categories": [
     {
       "id": "tshirts",
