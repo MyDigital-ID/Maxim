@@ -289,7 +289,6 @@ $("reloadBtn").onclick = async () => {
 async function saveAll() {
   showLoading("جاري حفظ التعديلات...");
   try {
-    // ١) الصور المميزة
     if (pendingFeatured.length > 0) {
       showLoading(`جاري رفع ${pendingFeatured.length} صورة مميزة...`);
       if (!storeData.featured) storeData.featured = [];
@@ -303,14 +302,12 @@ async function saveAll() {
       pendingFeatured = [];
     }
 
-    // ٢) صور المنتجات
     const pendingCount = Object.values(pendingImages).reduce((a, arr) => a + arr.length, 0);
     if (pendingCount > 0) {
       showLoading(`جاري رفع ${pendingCount} صورة منتج...`);
       await uploadAllPendingImages();
     }
 
-    // ٣) حفظ JSON
     showLoading("جاري حفظ البيانات على GitHub...");
     await saveDataToGitHub();
     showStatus("تم الحفظ ✅ التحديث هيظهر خلال دقيقة", "ok");
@@ -563,7 +560,6 @@ function buildZoneCard(cat, idx) {
     title.querySelector(".toggle-chev").classList.toggle("open");
   };
 
-  // ---- الحقول الأساسية ----
   body.appendChild(fieldRow("اسم القسم (عربي)", cat.name_ar, (v) => {
     cat.name_ar = v;
     info.querySelector("span:nth-child(2)").textContent = v;
@@ -575,7 +571,6 @@ function buildZoneCard(cat, idx) {
   }));
   body.appendChild(fieldRow("رابط صورة القسم", cat.homeImg, (v) => { cat.homeImg = v; }));
 
-  // ---- رفع صورة القسم ----
   const homeImgActions = document.createElement("div");
   homeImgActions.style.cssText = "display:flex;gap:8px;margin-top:10px";
   const uploadHomeBtn = document.createElement("button");
@@ -624,7 +619,7 @@ function buildZoneCard(cat, idx) {
 
   const colorsHint = document.createElement("p");
   colorsHint.className = "cat-colors-hint";
-  colorsHint.textContent = "اضغط على أي لون لإخفائه/إظهاره. الألوان دي هي اللي هتظهر كخيارات تحت كل صورة في القسم ده، وهي اللي العميل هيتصفح بها الصور.";
+  colorsHint.textContent = "اضغط على أي لون لإخفائه/إظهاره. الألوان دي هي اللي هتظهر كخيارات سريعة تحت كل صورة. لو محتاج لون مش في القائمة، استخدم زر ( + لون جديد ) تحت الصورة نفسها.";
   colorsBox.appendChild(colorsHint);
 
   const chipsWrap = document.createElement("div");
@@ -646,7 +641,6 @@ function buildZoneCard(cat, idx) {
 
   colorsBox.appendChild(chipsWrap);
 
-  // زر استرجاع كل الألوان
   const restoreBtn = document.createElement("button");
   restoreBtn.type = "button";
   restoreBtn.className = "img-color-tags-all-btn";
@@ -773,7 +767,7 @@ function buildProductCard(prod, pIdx, cat, rerender) {
 }
 
 // ============================================================
-// 📷 صور المنتج — كل صورة تحتها شرائح ألوان
+// 📷 صور المنتج — كل صورة تحتها شرائح ألوان + لون مخصص
 // ============================================================
 function buildImagesSection(prod, rerender, cat) {
   const wrap = document.createElement("div");
@@ -784,10 +778,9 @@ function buildImagesSection(prod, rerender, cat) {
 
   const hint = document.createElement("p");
   hint.style.cssText = "font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;font-weight:700;line-height:1.6";
-  hint.textContent = "لكل صورة: اضغط على الألوان المتوفرة فيها (ممكن أكثر من لون). الصور اللي ملهاش لون هتتعرض بدون اسم لون.";
+  hint.textContent = "لكل صورة: اضغط على الألوان المتوفرة فيها. الألوان المخصصة (زي: روز، ذهبي، فضي) ضيفها بزر (+ لون جديد) — اللون ده هيتحفظ للصورة دي بس.";
   wrap.appendChild(hint);
 
-  // الألوان المسموح بها في القسم
   const enabledColors = (cat && cat.colors && cat.colors.length) ? cat.colors : COLOR_PALETTE;
 
   const grid = document.createElement("div");
@@ -801,10 +794,15 @@ function buildImagesSection(prod, rerender, cat) {
     return (prod.colors[i] || "").split(/[،,]/).map(s => s.trim()).filter(Boolean);
   }
 
+  // ============================================================
+  // بناء صف الألوان لصورة معينة
+  // ============================================================
   function buildColorRow(imgIdx) {
     const row = document.createElement("div");
     row.className = "img-colors-row";
     const active = colorList(imgIdx);
+
+    // ١) الألوان الأساسية من القسم
     enabledColors.forEach(c => {
       const t = document.createElement("button");
       t.type = "button";
@@ -821,6 +819,47 @@ function buildImagesSection(prod, rerender, cat) {
       };
       row.appendChild(t);
     });
+
+    // ٢) الألوان المخصصة (اللي مش موجودة في القسم، بس مضافة على الصورة دي)
+    const customColors = active.filter(c => !enabledColors.includes(c));
+    customColors.forEach(c => {
+      const t = document.createElement("button");
+      t.type = "button";
+      t.className = "img-color-tag custom";
+      t.textContent = c + " ✕";
+      t.title = "لون مخصص - اضغط للحذف";
+      t.onclick = (e) => {
+        e.preventDefault();
+        const list = colorList(imgIdx);
+        const i = list.indexOf(c);
+        if (i > -1) list.splice(i, 1);
+        prod.colors[imgIdx] = list.join("، ");
+        rerender();
+      };
+      row.appendChild(t);
+    });
+
+    // ٣) زر "+ لون جديد"
+    const addCustomBtn = document.createElement("button");
+    addCustomBtn.type = "button";
+    addCustomBtn.className = "img-color-tag add-custom";
+    addCustomBtn.textContent = "+ لون جديد";
+    addCustomBtn.onclick = (e) => {
+      e.preventDefault();
+      const newColor = prompt("اكتب اسم اللون المخصص (مثال: روز، ذهبي، فضي، كريمي...):");
+      if (!newColor) return;
+      const cleanColor = newColor.trim().replace(/[،,]/g, " ").trim();
+      if (!cleanColor) return;
+      const list = colorList(imgIdx);
+      if (!list.includes(cleanColor)) {
+        list.push(cleanColor);
+        prod.colors[imgIdx] = list.join("، ");
+      }
+      rerender();
+    };
+    row.appendChild(addCustomBtn);
+
+    // ٤) زر "الكل" (للألوان الأساسية بس)
     if (enabledColors.length > 1) {
       const allBtn = document.createElement("button");
       allBtn.type = "button";
@@ -833,13 +872,94 @@ function buildImagesSection(prod, rerender, cat) {
       };
       row.appendChild(allBtn);
     }
+
     return row;
   }
 
+  // ============================================================
+  // بناء صف الألوان لصورة قيد الرفع
+  // ============================================================
+  function buildPendingColorRow(file) {
+    const row = document.createElement("div");
+    row.className = "img-colors-row";
+    const active = (file.colorNames || []).slice();
+
+    // ١) الألوان الأساسية
+    enabledColors.forEach(c => {
+      const t = document.createElement("button");
+      t.type = "button";
+      t.className = "img-color-tag" + (active.includes(c) ? " on" : "");
+      t.textContent = c;
+      t.onclick = (e) => {
+        e.preventDefault();
+        const list = file.colorNames || (file.colorNames = []);
+        const ix = list.indexOf(c);
+        if (ix > -1) list.splice(ix, 1);
+        else list.push(c);
+        t.classList.toggle("on");
+      };
+      row.appendChild(t);
+    });
+
+    // ٢) الألوان المخصصة
+    const customColors = active.filter(c => !enabledColors.includes(c));
+    customColors.forEach(c => {
+      const t = document.createElement("button");
+      t.type = "button";
+      t.className = "img-color-tag custom";
+      t.textContent = c + " ✕";
+      t.title = "لون مخصص - اضغط للحذف";
+      t.onclick = (e) => {
+        e.preventDefault();
+        const list = file.colorNames || [];
+        const ix = list.indexOf(c);
+        if (ix > -1) list.splice(ix, 1);
+        rerender();
+      };
+      row.appendChild(t);
+    });
+
+    // ٣) زر "+ لون جديد"
+    const addCustomBtn = document.createElement("button");
+    addCustomBtn.type = "button";
+    addCustomBtn.className = "img-color-tag add-custom";
+    addCustomBtn.textContent = "+ لون جديد";
+    addCustomBtn.onclick = (e) => {
+      e.preventDefault();
+      const newColor = prompt("اكتب اسم اللون المخصص (مثال: روز، ذهبي، فضي...):");
+      if (!newColor) return;
+      const cleanColor = newColor.trim().replace(/[،,]/g, " ").trim();
+      if (!cleanColor) return;
+      if (!file.colorNames) file.colorNames = [];
+      if (!file.colorNames.includes(cleanColor)) file.colorNames.push(cleanColor);
+      rerender();
+    };
+    row.appendChild(addCustomBtn);
+
+    // ٤) زر "الكل"
+    if (enabledColors.length > 1) {
+      const allBtn = document.createElement("button");
+      allBtn.type = "button";
+      allBtn.className = "img-color-tags-all-btn";
+      allBtn.textContent = "الكل";
+      allBtn.onclick = (e) => {
+        e.preventDefault();
+        file.colorNames = [...enabledColors];
+        rerender();
+      };
+      row.appendChild(allBtn);
+    }
+
+    return row;
+  }
+
+  // ============================================================
+  // بناء شبكة الصور
+  // ============================================================
   function renderImgs() {
     grid.innerHTML = "";
 
-    // الصور المحفوظة
+    // ١) الصور المحفوظة
     prod.images.forEach((imgUrl, i) => {
       const cell = document.createElement("div");
       cell.className = "img-cell";
@@ -864,7 +984,7 @@ function buildImagesSection(prod, rerender, cat) {
       grid.appendChild(cell);
     });
 
-    // الصور قيد الرفع
+    // ٢) الصور قيد الرفع
     const pending = pendingImages[prod.id] || [];
     pending.forEach((file, i) => {
       const cell = document.createElement("div");
@@ -889,43 +1009,11 @@ function buildImagesSection(prod, rerender, cat) {
       thumb.appendChild(del);
       thumb.appendChild(badge);
       cell.appendChild(thumb);
-
-      // ألوان مؤقتة للصورة قيد الرفع
-      const tempRow = document.createElement("div");
-      tempRow.className = "img-colors-row";
-      const active = (file.colorNames || []).slice();
-      enabledColors.forEach(c => {
-        const t = document.createElement("button");
-        t.type = "button";
-        t.className = "img-color-tag" + (active.includes(c) ? " on" : "");
-        t.textContent = c;
-        t.onclick = (e) => {
-          e.preventDefault();
-          const list = file.colorNames || (file.colorNames = []);
-          const ix = list.indexOf(c);
-          if (ix > -1) list.splice(ix, 1);
-          else list.push(c);
-          t.classList.toggle("on");
-        };
-        tempRow.appendChild(t);
-      });
-      if (enabledColors.length > 1) {
-        const allBtn = document.createElement("button");
-        allBtn.type = "button";
-        allBtn.className = "img-color-tags-all-btn";
-        allBtn.textContent = "الكل";
-        allBtn.onclick = (e) => {
-          e.preventDefault();
-          file.colorNames = [...enabledColors];
-          rerender();
-        };
-        tempRow.appendChild(allBtn);
-      }
-      cell.appendChild(tempRow);
+      cell.appendChild(buildPendingColorRow(file));
       grid.appendChild(cell);
     });
 
-    // زر الإضافة
+    // ٣) زر الإضافة
     const addBtn = document.createElement("div");
     addBtn.className = "img-add-btn";
     addBtn.innerHTML = `📷<small>إضافة صورة</small>`;

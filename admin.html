@@ -344,6 +344,18 @@
     border-color: var(--gold-dark);
     color: #fff;
   }
+
+  /* لون مخصص (مضاف يدوياً) */
+  .img-color-tag.custom {
+    background: linear-gradient(135deg, #E67E22, #D35400);
+    border-color: #D35400;
+    color: #fff;
+  }
+  .img-color-tag.custom:hover {
+    filter: brightness(1.1);
+  }
+
+  /* زر "الكل" */
   .img-color-tags-all-btn {
     padding: 3px 8px;
     border-radius: 999px;
@@ -357,6 +369,16 @@
     line-height: 1.2;
   }
   .img-color-tags-all-btn:hover { background: rgba(245, 179, 1, 0.1); }
+
+  /* زر "+ لون جديد" */
+  .img-color-tag.add-custom {
+    background: transparent;
+    border: 1.5px dashed var(--success);
+    color: var(--success);
+  }
+  .img-color-tag.add-custom:hover {
+    background: rgba(39, 174, 96, 0.1);
+  }
 
   /* ============ Sizes ============ */
   .size-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
