@@ -1,29 +1,20 @@
 // ============================================================
 // Maxim Casual Wear - Service Worker
-// نسخة: v1.1.0
+// نسخة: v2.0.0
 // ============================================================
 
-const CACHE_VERSION = 'maxim-v1.1.0';
+const CACHE_VERSION = 'maxim-v2.0.0';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const RUNTIME_CACHE = CACHE_VERSION + '-runtime';
 
 // ملفات ثابتة - نخزنها من الأول
-const STATIC_ASSETS = [
-  './',
-  './index.html',
-  './style.css',
-  './script.js',
-  './site-data-loader.js',
-  './manifest.json',
-  './admin.html',
-  './admin.js',
-  './site-data.json',
   './assets/images/icon-192.png',
   './assets/images/icon-512.png',
   './assets/images/apple-touch-icon.png',
-  './assets/images/splash-lower.jpg'
+  './assets/images/splash-lower.jpg',
+  './assets/images/qr-code.png',
+  './assets/images/logo-main.jpg'
 ];
-
 // ============================================================
 // تثبيت Service Worker
 // ============================================================
