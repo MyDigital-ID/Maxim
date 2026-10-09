@@ -1033,5 +1033,57 @@ function placeSplashDot() {
 }
 placeSplashDot();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeSplashDot);
+// ============================================================
+// Preload كل الصور للـoffline
+// يشتغل في الخلفية بعد تحميل الصفحة
+// ============================================================
+function preloadAllImages() {
+  const urls = new Set();
 
+  // 1) الصور المميزة
+  (STORE_DATA.featured || []).forEach(url => urls.add(url));
+
+  // 2) صور العروض
+  (STORE_DATA.offers || []).forEach(offer => {
+    if (offer.image) urls.add(offer.image);
+  });
+
+  // 3) صور كل المنتجات في كل الأقسام
+  (STORE_DATA.categories || []).forEach(cat => {
+    if (cat.homeImg) urls.add(cat.homeImg);
+    (cat.products || []).forEach(prod => {
+      (prod.images || []).forEach(img => urls.add(img));
+    });
+  });
+
+  console.log(`📸 Preloading ${urls.size} images for offline...`);
+
+  // تحميل كل صورة واحدة ورا التانية (ببطء عشان ما يزحمش الشبكة)
+  let loaded = 0;
+  let failed = 0;
+  const total = urls.size;
+
+  urls.forEach(url => {
+    const img = new Image();
+    img.onload = () => {
+      loaded++;
+      if (loaded + failed === total) {
+        console.log(`✅ Preload complete: ${loaded}/${total} images ready for offline`);
+      }
+    };
+    img.onerror = () => {
+      failed++;
+      if (loaded + failed === total) {
+        console.log(`⚠️ Preload done: ${loaded} loaded, ${failed} failed`);
+      }
+    };
+    img.src = url;
+  });
+}
+
+// تشغيل الـPreload بعد 3 ثواني من تحميل الموقع
+// (عشان ما يعطلش تجربة المستخدم)
+window.addEventListener('load', () => {
+  setTimeout(preloadAllImages, 3000);
+});
 console.log("🛍️ Maxim store loaded");
