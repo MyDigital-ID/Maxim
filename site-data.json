@@ -33,7 +33,6 @@
     "https://mydigital-id.github.io/Maxim/assets/uploads/featured_1791597450098_b8q8.jpg",
     "https://mydigital-id.github.io/Maxim/assets/uploads/featured_1791598201052_eng8.jpg",
     "https://mydigital-id.github.io/Maxim/assets/uploads/featured_1791598204495_60ou.png",
-    "https://mydigital-id.github.io/Maxim/assets/uploads/featured_1791675478960_cdjd.jpg",
     "https://mydigital-id.github.io/Maxim/assets/uploads/featured_1791675484161_903p.jpg"
   ],
   "offers": [
@@ -1870,6 +1869,31 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cat_1791675867540_ja4v",
+      "icon": "🛍️",
+      "name_ar": "جواكت",
+      "name_en": "",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/cat_cat_1791675867540_ja4v_1791675961520.jpg",
+      "visible": true,
+      "colors": [
+        "أبيض",
+        "أسود",
+        "بني",
+        "بيج فاتح",
+        "بيج",
+        "أزرق",
+        "لبني",
+        "أخضر",
+        "زيتي",
+        "أحمر",
+        "أصفر",
+        "رمادي",
+        "كحلي",
+        "برتقالي"
+      ],
+      "products": []
     }
   ]
 }
