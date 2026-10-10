@@ -3,6 +3,8 @@
 // ============================================================
 
 (async function loadSiteData() {
+  const STORAGE_KEY = 'maximStoreData_v2';
+
   try {
     const res = await fetch('site-data.json?t=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -38,14 +40,30 @@
       })
     };
 
-    // ←←← اسم المفتاح الجديد (v2)
-    localStorage.setItem('maximStoreData_v2', JSON.stringify(converted));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(converted));
     console.log('✅ site-data.json loaded:', converted.categories.length, 'categories,', converted.offers.length, 'offers');
 
     window.dispatchEvent(new Event('storeDataReady'));
 
   } catch (e) {
     console.warn('⚠️ site-data.json failed:', e.message);
+
+    // لو فيه بيانات محفوظة من زيارة سابقة (مثلاً أوفلاين) نستخدمها ولا نمسحها
+    let saved = null;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) saved = JSON.parse(raw);
+    } catch (err) {
+      saved = null;
+    }
+
+    if (saved && Array.isArray(saved.categories) && saved.categories.length > 0) {
+      console.log('📦 Using saved store data (offline mode)');
+      window.dispatchEvent(new Event('storeDataReady'));
+      return;
+    }
+
+    // أول مرة خالص ومفيش أي بيانات: نستخدم البيانات الافتراضية
     const fallback = {
       config: {
         brand_ar: 'Maxim',
@@ -63,7 +81,7 @@
       offers: [],
       categories: []
     };
-    localStorage.setItem('maximStoreData_v2', JSON.stringify(fallback));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback));
     window.dispatchEvent(new Event('storeDataReady'));
   }
 })();
