@@ -135,21 +135,48 @@ async function fetchFromGitHub() {
   return JSON.parse(base64ToUtf8(info.content));
 }
 
+async function fetchLatestSha() {
+  const res = await fetch(`${DATA_API}?ref=${GITHUB_BRANCH}&t=${Date.now()}`, {
+    headers: ghHeaders(),
+    cache: "no-store"
+  });
+  if (res.status === 401) throw new Error("التوكن غير صحيح أو منتهي");
+  if (!res.ok) throw new Error("تعذر قراءة آخر نسخة من GitHub (كود " + res.status + ")");
+  const info = await res.json();
+  return info.sha;
+}
+
 async function saveDataToGitHub() {
   const newContent = JSON.stringify(storeData, null, 2);
-  const res = await fetch(DATA_API, {
-    method: "PUT",
-    headers: { ...ghHeaders(), "Content-Type": "application/json" },
-    body: JSON.stringify({
-      message: "تحديث بيانات Maxim من لوحة التحكم",
-      content: utf8ToBase64(newContent),
-      sha: currentSha,
-      branch: GITHUB_BRANCH
-    })
-  });
-  const out = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(out.message || ("Save error " + res.status));
-  currentSha = out.content.sha;
+
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    // دايماً نجيب آخر رقم نسخة قبل الحفظ
+    currentSha = await fetchLatestSha();
+
+    const res = await fetch(DATA_API, {
+      method: "PUT",
+      headers: { ...ghHeaders(), "Content-Type": "application/json" },
+      cache: "no-store",
+      body: JSON.stringify({
+        message: "تحديث بيانات Maxim من لوحة التحكم",
+        content: utf8ToBase64(newContent),
+        sha: currentSha,
+        branch: GITHUB_BRANCH
+      })
+    });
+    const out = await res.json().catch(() => ({}));
+
+    if (res.ok) {
+      currentSha = out && out.content ? out.content.sha : currentSha;
+      return;
+    }
+
+    const msg = (out && out.message) || "";
+    const isShaConflict = res.status === 409 || /does not match/i.test(msg);
+    if (isShaConflict && attempt === 1) continue; // نعيد المحاولة مرة بالرقم الجديد
+
+    throw new Error(msg || ("خطأ في الحفظ (كود " + res.status + ")"));
+  }
 }
 
 async function uploadImageToGitHub(base64Content, fileName) {
@@ -288,39 +315,53 @@ $("reloadBtn").onclick = async () => {
 // ============================================================
 // الحفظ
 // ============================================================
+let isSaving = false;
+
+function setSaveButtonsDisabled(disabled) {
+  ["saveBtn", "saveBtnBottom"].forEach((id) => {
+    const el = $(id);
+    if (el) { el.disabled = disabled; el.style.pointerEvents = disabled ? "none" : ""; el.style.opacity = disabled ? "0.6" : ""; }
+  });
+}
+
 async function saveAll() {
+  if (isSaving) return;       // يمنع الضغط المزدوج
+  isSaving = true;
+  setSaveButtonsDisabled(true);
   showLoading("جاري حفظ التعديلات...");
+  let failed = false;
   try {
     // ١) الصور المميزة
     if (pendingFeatured.length > 0) {
-      showLoading(`جاري رفع ${pendingFeatured.length} صورة مميزة...`);
       if (!storeData.featured) storeData.featured = [];
-      for (const file of pendingFeatured) {
+      const total = pendingFeatured.length;
+      let done = 0;
+      while (pendingFeatured.length > 0) {
+        showLoading(`جاري رفع الصور المميزة (${++done} من ${total})...`);
+        const file = pendingFeatured[0];
         const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
         const fileName = `featured_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`;
         const b64 = await compressImage(file);
         const url = await uploadImageToGitHub(b64, fileName);
         storeData.featured.push(url);
+        pendingFeatured.shift();   // تتشال من "قيد الرفع" بعد نجاحها بس
       }
-      pendingFeatured = [];
     }
 
     // ٢) صور العروض
-    const pendingOffersCount = Object.keys(pendingOffers).length;
-    if (pendingOffersCount > 0) {
-      showLoading(`جاري رفع ${pendingOffersCount} صورة عرض...`);
+    if (Object.keys(pendingOffers).length > 0) {
       if (!storeData.offers) storeData.offers = [];
       for (const offerId of Object.keys(pendingOffers)) {
+        showLoading("جاري رفع صور العروض...");
         const file = pendingOffers[offerId];
         const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
         const fileName = `offer_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`;
         const b64 = await compressImage(file);
         const url = await uploadImageToGitHub(b64, fileName);
-        // حدّد العرض المطلوب وحدّث صورته
         const offer = storeData.offers.find(o => o.id === offerId);
         if (offer) offer.image = url;
+        delete pendingOffers[offerId];
       }
-      pendingOffers = {};
     }
 
     // ٣) صور المنتجات
@@ -334,11 +375,18 @@ async function saveAll() {
     showLoading("جاري حفظ البيانات على GitHub...");
     await saveDataToGitHub();
     showStatus("تم الحفظ ✅ التحديث هيظهر خلال دقيقة", "ok");
-    pendingImages = {};
   } catch (e) {
-    showStatus("فشل الحفظ: " + e.message, "err");
+    failed = true;
+    const reason = (e && e.message) ? e.message : String(e || "سبب غير معروف");
+    showStatus("فشل الحفظ: " + reason, "err");
   }
   hideLoading();
+  if (failed) {
+    // نحدّث الشاشة عشان الصور اللي اترفعت فعلاً ما تتعملش تاني
+    try { renderAll(); } catch (e) {}
+  }
+  isSaving = false;
+  setSaveButtonsDisabled(false);
 }
 
 $("saveBtn").onclick = saveAll;
@@ -354,13 +402,14 @@ async function uploadAllPendingImages() {
       const p = cat.products.find(pp => pp.id === productId);
       if (p) { product = p; break; }
     }
-    if (!product) continue;
+    if (!product) { delete pendingImages[productId]; continue; }
 
     if (!product.images) product.images = [];
     if (!product.colors) product.colors = [];
     while (product.colors.length < product.images.length) product.colors.push("");
 
-    for (const file of files) {
+    while (files.length > 0) {
+      const file = files[0];
       const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
       const fileName = `${productId}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`;
       const b64 = await compressImage(file);
@@ -368,7 +417,9 @@ async function uploadAllPendingImages() {
       product.images.push(url);
       const colorStr = (file.colorNames || []).join("، ");
       product.colors.push(colorStr);
+      files.shift();   // تتشال من "قيد الرفع" بعد نجاحها بس
     }
+    delete pendingImages[productId];
   }
 }
 
