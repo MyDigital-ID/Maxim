@@ -1894,6 +1894,55 @@
         "برتقالي"
       ],
       "products": []
+    },
+    {
+      "id": "cat_1791681013782_e43n",
+      "icon": "🛍️",
+      "name_ar": "الموديلات الجديده ",
+      "name_en": "New Collections",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/cat_cat_1791681013782_e43n_1791681032227.jpg",
+      "visible": true,
+      "colors": [
+        "أبيض",
+        "أسود",
+        "بني",
+        "بيج فاتح",
+        "بيج",
+        "أزرق",
+        "لبني",
+        "أخضر",
+        "زيتي",
+        "أحمر",
+        "أصفر",
+        "رمادي",
+        "كحلي",
+        "برتقالي"
+      ],
+      "products": [
+        {
+          "id": "p_1791681047484_r31r",
+          "name_ar": "توب غامق",
+          "name_en": "Black Top",
+          "desc_ar": "توب أسود بسحاب فضي ",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/p_1791681047484_r31r_1791681157803_mlqa.jpg"
+          ],
+          "colors": [
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "XL",
+              "price": 450
+            },
+            {
+              "label": "XXXL",
+              "price": 550
+            }
+          ]
+        }
+      ]
     }
   ]
 }
