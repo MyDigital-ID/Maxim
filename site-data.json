@@ -1067,13 +1067,21 @@
         },
         {
           "id": "pt2",
-          "name_ar": "بنطال كارجو",
-          "name_en": "Cargo pants",
-          "desc_ar": "بنطلون كارجو (هينقلك في حته تانيه بخامته الناعمه)",
+          "name_ar": "سويت بانز خامه قطن",
+          "name_en": "Sweet Pants",
+          "desc_ar": "بنطلون قطن (هينقلك في حته تانيه بخامته الناعمه)",
           "desc_en": "Adidas olive green pants",
-          "images": [],
-          "colors": [],
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/pt2_1792269913896_3r6d.jpg"
+          ],
+          "colors": [
+            "رمادي"
+          ],
           "sizes": [
+            {
+              "label": "S",
+              "price": 0
+            },
             {
               "label": "M",
               "price": 550,
