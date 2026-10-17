@@ -988,17 +988,53 @@
           "desc_en": "Adidas comfortable cotton pants",
           "images": [
             "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80",
-            "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=800&q=80",
-            "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&q=80",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/pt1_1792250236297_pl19.jpg"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/pt1_1792264925906_8oy6.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/pt1_1792264928925_rj42.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/pt1_1792264932076_diiq.jpg"
           ],
           "colors": [
             "رمادي",
-            "زيتي",
-            "أسود",
-            "بيج"
+            "بني",
+            "بيج",
+            "أسود"
           ],
           "sizes": [
+            {
+              "label": "30",
+              "price": 0
+            },
+            {
+              "label": "31",
+              "price": 0
+            },
+            {
+              "label": "32",
+              "price": 0
+            },
+            {
+              "label": "33",
+              "price": 0
+            },
+            {
+              "label": "34",
+              "price": 0
+            },
+            {
+              "label": "35",
+              "price": 0
+            },
+            {
+              "label": "36",
+              "price": 0
+            },
+            {
+              "label": "37",
+              "price": 0
+            },
+            {
+              "label": "38",
+              "price": 0
+            },
             {
               "label": "S",
               "price": 550,
@@ -1033,9 +1069,9 @@
         },
         {
           "id": "pt2",
-          "name_ar": "بنطال Adidas أخضر",
-          "name_en": "Adidas Green Pants",
-          "desc_ar": "بنطال Adidas بلون أخضر زيتي",
+          "name_ar": "بنطال كارجو",
+          "name_en": "Cargo pants",
+          "desc_ar": "بنطلون كارجو (هينقلك في حته تانيه بخامته الناعمه)",
           "desc_en": "Adidas olive green pants",
           "images": [
             "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=800&q=80",
