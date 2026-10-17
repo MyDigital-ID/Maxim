@@ -11,6 +11,11 @@ let GITHUB_REPO   = localStorage.getItem(REPO_KEY) || "";
 let FOLDER_PATH   = localStorage.getItem(FOLDER_KEY) || "";
 let GITHUB_BRANCH = "main";
 
+// يشفّر كل جزء من المسار (مهم لو اسم الفولدر فيه عربي أو مسافات)
+function encodePath(p) {
+  return String(p).split("/").map(encodeURIComponent).join("/");
+}
+
 let DATA_PATH   = "";
 let IMAGES_PATH = "";
 let DATA_API    = "";
@@ -18,7 +23,7 @@ let DATA_API    = "";
 function recomputeGithubPaths() {
   DATA_PATH   = FOLDER_PATH ? `${FOLDER_PATH}/site-data.json` : "site-data.json";
   IMAGES_PATH = FOLDER_PATH ? `${FOLDER_PATH}/assets/uploads` : "assets/uploads";
-  DATA_API    = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${DATA_PATH}`;
+  DATA_API    = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodePath(DATA_PATH)}`;
 }
 recomputeGithubPaths();
 
@@ -73,39 +78,49 @@ function base64ToUtf8(b64) {
 
 function compressImage(file, maxSize = 1200, quality = 0.85) {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        let w = img.width, h = img.height;
+    const objUrl = URL.createObjectURL(file);
+    const img = new Image();
+    const fail = (m) => { URL.revokeObjectURL(objUrl); reject(new Error(m)); };
+    img.onload = () => {
+      try {
+        let w = img.naturalWidth || img.width;
+        let h = img.naturalHeight || img.height;
+        if (!w || !h) return fail("الصورة فاضية أو تالفة: " + file.name);
         if (w > maxSize || h > maxSize) {
           if (w > h) { h = (maxSize / w) * h; w = maxSize; }
           else { w = (maxSize / h) * w; h = maxSize; }
         }
+        w = Math.max(1, Math.round(w));
+        h = Math.max(1, Math.round(h));
         const canvas = document.createElement("canvas");
         canvas.width = w; canvas.height = h;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, w, h);
         canvas.toBlob((blob) => {
-          const reader2 = new FileReader();
-          reader2.onload = () => resolve(reader2.result.split(",")[1]);
-          reader2.onerror = reject;
-          reader2.readAsDataURL(blob);
+          URL.revokeObjectURL(objUrl);
+          if (!blob) return reject(new Error("تعذر ضغط الصورة (غالبًا الصورة كبيرة على ذاكرة الجهاز): " + file.name));
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result).split(",")[1]);
+          reader.onerror = () => reject(new Error("تعذر قراءة الصورة بعد الضغط: " + file.name));
+          reader.readAsDataURL(blob);
         }, "image/jpeg", quality);
-      };
-      img.onerror = reject;
-      img.src = e.target.result;
+      } catch (e) {
+        fail("تعذر معالجة الصورة " + file.name + ": " + ((e && e.message) || e));
+      }
     };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+    img.onerror = () => fail("تعذر فتح الصورة " + file.name + " (الصيغة غير مدعومة أو الملف تالف) — جرّب صورة JPG أو PNG");
+    img.src = objUrl;
   });
 }
 
+let statusTimer = null;
 function showStatus(msg, type = "ok") {
   const el = $("statusMsg");
   el.textContent = msg;
   el.className = "show " + type;
-  setTimeout(() => { el.className = ""; }, 4500);
+  clearTimeout(statusTimer);
+  // رسائل الخطأ تفضل أطول عشان تلحق تقراها
+  statusTimer = setTimeout(() => { el.className = ""; }, type === "err" ? 15000 : 4500);
 }
 
 function showLoading(text = "جاري التحميل...") {
@@ -122,90 +137,232 @@ function uid(prefix = "id") {
 }
 
 // ============================================================
-// GitHub API
+// GitHub API — طبقة اتصال مقاومة للأعطال
+// (إعادة محاولة تلقائية + مهلة + فاصل بين الكتابات + رسائل واضحة)
 // ============================================================
-async function fetchFromGitHub() {
-  const res = await fetch(`${DATA_API}?ref=${GITHUB_BRANCH}&t=${Date.now()}`, {
-    headers: ghHeaders()
-  });
-  if (res.status === 401) throw new Error("UNAUTHORIZED");
-  if (!res.ok) throw new Error("GitHub error " + res.status);
-  const info = await res.json();
-  currentSha = info.sha;
-  return JSON.parse(base64ToUtf8(info.content));
+const GH_TIMEOUT_MS   = 30000;                 // أقصى مدة للطلب الواحد
+const GH_MAX_ATTEMPTS = 4;                     // عدد المحاولات لكل طلب
+const GH_WRITE_GAP_MS = 1100;                  // أقل فاصل بين أي عمليتين كتابة
+const GH_BACKOFF_MS   = [1500, 3500, 7000];    // الانتظار بين المحاولات
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+class GhError extends Error {
+  constructor(message, status = 0, kind = "other") {
+    super(message);
+    this.name = "GhError";
+    this.status = status;
+    this.kind = kind;   // auth | notfound | forbidden | ratelimit | network | conflict | badjson | cancelled | other
+  }
 }
 
-async function fetchLatestSha() {
-  const res = await fetch(`${DATA_API}?ref=${GITHUB_BRANCH}&t=${Date.now()}`, {
-    headers: ghHeaders(),
-    cache: "no-store"
-  });
-  if (res.status === 401) throw new Error("التوكن غير صحيح أو منتهي");
-  if (!res.ok) throw new Error("تعذر قراءة آخر نسخة من GitHub (كود " + res.status + ")");
-  const info = await res.json();
-  return info.sha;
+// يحوّل أي خطأ لنص مفهوم (بدل [object Event] وغيرها)
+function errMsg(e) {
+  if (!e) return "سبب غير معروف";
+  if (e instanceof GhError) return e.message;
+  if (typeof e === "string") return e;
+  if (e.message) return e.message;
+  if (typeof Event !== "undefined" && e instanceof Event) return "تعذر قراءة الصورة (الملف تالف أو صيغته غير مدعومة)";
+  return String(e);
+}
+
+function notifyRetry(text) {
+  const t = $("loadingText"), o = $("loadingOverlay");
+  if (t && o && o.classList.contains("show")) t.textContent = text;
+}
+
+let lastWriteAt = 0;
+async function throttleWrite() {
+  const wait = lastWriteAt + GH_WRITE_GAP_MS - Date.now();
+  if (wait > 0) await sleep(wait);
+  lastWriteAt = Date.now();
+}
+
+// يحدد هل الفشل يستاهل إعادة محاولة، ويرجّع رسالة عربي واضحة
+function classifyFailure(status, data, headers, attempt) {
+  const apiMsg = (data && data.message) || "";
+  const code = " (كود " + status + ")";
+
+  if (status === 401) {
+    return { retry: false, err: new GhError("التوكن غير صحيح أو منتهي الصلاحية — اعمل توكن جديد وسجّل الدخول تاني" + code, status, "auth") };
+  }
+  if (status === 403 || status === 429) {
+    const retryAfter = parseInt(headers.get("retry-after") || "", 10);
+    const remaining = headers.get("x-ratelimit-remaining");
+    const reset = parseInt(headers.get("x-ratelimit-reset") || "", 10);
+    const isLimit = status === 429 || !isNaN(retryAfter) || remaining === "0" ||
+                    /rate limit|abuse|secondary|too many/i.test(apiMsg);
+    if (isLimit) {
+      let wait = !isNaN(retryAfter) ? retryAfter * 1000
+               : (remaining === "0" && !isNaN(reset)) ? reset * 1000 - Date.now()
+               : 5000 * attempt;
+      wait = Math.min(Math.max(wait, 2000), 60000);
+      return { retry: true, waitMs: wait, err: new GhError("GitHub طلب تهدئة بسبب كثرة الطلبات — استنى دقيقة وجرّب تاني" + code, status, "ratelimit") };
+    }
+    return { retry: false, err: new GhError("التوكن مالوش صلاحية الكتابة على الريبو (لازم Contents: Read and write)" + code, status, "forbidden") };
+  }
+  if (status === 404) {
+    return { retry: false, err: new GhError("الملف أو الريبو مش موجود، أو التوكن مالوش صلاحية على الريبو ده" + code, status, "notfound") };
+  }
+  if (status === 409) {
+    return { retry: true, err: new GhError("تعارض في النسخة على GitHub (حصل تعديل في نفس اللحظة)" + code, status, "conflict") };
+  }
+  if (status === 422) {
+    // أغلب حالات 422 هنا بتكون مشكلة sha — بتتحل بإعادة المحاولة
+    return { retry: /sha/i.test(apiMsg), err: new GhError("GitHub رفض الطلب: " + (apiMsg || "بيانات غير صالحة") + code, status, "other") };
+  }
+  if (status >= 500) {
+    return { retry: true, err: new GhError("GitHub مشغول مؤقتًا" + code, status, "other") };
+  }
+  return { retry: false, err: new GhError((apiMsg || "خطأ غير متوقع من GitHub") + code, status, "other") };
+}
+
+// الدالة الأساسية: كل طلبات GitHub بتعدي من هنا
+// initOrBuilder: كائن إعدادات fetch، أو دالة async (attempt, lastErr) بترجّعه (عشان نجدد الـ sha كل محاولة)
+async function ghRequest(url, initOrBuilder, opts = {}) {
+  const attempts = opts.attempts || GH_MAX_ATTEMPTS;
+  const label = opts.label || "الاتصال بـ GitHub";
+  let lastErr = null;
+
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), GH_TIMEOUT_MS);
+    let failure = null;
+    try {
+      const init = typeof initOrBuilder === "function" ? await initOrBuilder(attempt, lastErr) : initOrBuilder;
+      const isWrite = !!(init.method && init.method !== "GET");
+      if (isWrite) await throttleWrite();
+
+      const res = await fetch(url, { ...init, cache: "no-store", signal: ctrl.signal });
+      let data = null, text = "";
+      if (opts.raw && res.ok) text = await res.text();
+      else data = await res.json().catch(() => null);
+      if (isWrite) lastWriteAt = Date.now();
+
+      if (res.ok) { clearTimeout(timer); return { status: res.status, data, text }; }
+      if (opts.allow404 && res.status === 404) { clearTimeout(timer); return { status: 404, data: null, text: "" }; }
+      failure = classifyFailure(res.status, data, res.headers, attempt);
+    } catch (e) {
+      if (e instanceof GhError) { clearTimeout(timer); throw e; }   // جاي من داخل الـ builder (بعد محاولاته)
+      const timedOut = e && e.name === "AbortError";
+      failure = {
+        retry: true,
+        err: new GhError(timedOut
+          ? "الاتصال بـ GitHub أخد وقت طويل (انتهت المهلة) — اتأكد من الإنترنت"
+          : "تعذر الاتصال بـ GitHub — اتأكد من الإنترنت", 0, "network")
+      };
+    }
+    clearTimeout(timer);
+    lastErr = failure.err;
+    if (!failure.retry || attempt === attempts) throw failure.err;
+
+    const wait = failure.waitMs != null ? failure.waitMs
+               : GH_BACKOFF_MS[Math.min(attempt - 1, GH_BACKOFF_MS.length - 1)];
+    notifyRetry(`${label}: فشلت المحاولة ${attempt} من ${attempts}، إعادة المحاولة بعد ${Math.ceil(wait / 1000)} ثانية...`);
+    await sleep(wait);
+  }
+  throw lastErr || new GhError("فشل غير معروف");
+}
+
+let baseSha = null;   // نسخة site-data.json اللي بدأنا نعدّل عليها (لاكتشاف تعديل من جهاز تاني)
+
+// يقرأ آخر نسخة من الملف. needText=true يرجّع المحتوى كمان
+async function fetchRemote(needText) {
+  const url = `${DATA_API}?ref=${GITHUB_BRANCH}&t=${Date.now()}`;
+  const r = await ghRequest(url, () => ({ headers: ghHeaders() }), { label: "قراءة البيانات" });
+  const info = r.data || {};
+  let text = null;
+  if (needText) {
+    if (info.content && info.encoding === "base64") {
+      text = base64ToUtf8(info.content);
+    } else {
+      // الملفات الأكبر من 1MB مش بترجع محتوى في الرد العادي — نقرأها بصيغة raw
+      const raw = await ghRequest(url, () => ({
+        headers: { ...ghHeaders(), "Accept": "application/vnd.github.raw+json" }
+      }), { raw: true, label: "قراءة البيانات" });
+      text = raw.text;
+    }
+  }
+  return { sha: info.sha, text };
+}
+
+async function fetchFromGitHub() {
+  const { sha, text } = await fetchRemote(true);
+  currentSha = sha;
+  baseSha = sha;
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    throw new GhError("ملف site-data.json على GitHub تالف أو مش JSON صحيح — راجعه قبل ما تحفظ", 0, "badjson");
+  }
 }
 
 async function saveDataToGitHub() {
   const newContent = JSON.stringify(storeData, null, 2);
+  const encoded = utf8ToBase64(newContent);
 
-  for (let attempt = 1; attempt <= 2; attempt++) {
-    // دايماً نجيب آخر رقم نسخة قبل الحفظ
-    currentSha = await fetchLatestSha();
+  // حماية: لو الملف اتعدّل من جهاز/شخص تاني بعد ما فتحت اللوحة، ما نكتبش فوقه بدون علمك
+  let remote = await fetchRemote(false);
+  if (baseSha && remote.sha !== baseSha) {
+    await sleep(2000);                        // نتأكد إنها مش قراءة قديمة
+    remote = await fetchRemote(true);
+    if (remote.sha !== baseSha) {
+      if (remote.text === newContent) {       // نفس البيانات اتحفظت فعلاً (ممكن الرد ضاع)
+        currentSha = baseSha = remote.sha;
+        return;
+      }
+      const go = confirm("الموقع اتعدّل من جهاز تاني بعد ما فتحت اللوحة.\nلو كملت، التعديلات دي هتتمسح وتتستبدل بنسختك.\n\nتكمل الحفظ؟");
+      if (!go) throw new GhError("تم إلغاء الحفظ — اضغط 'تحديث البيانات' الأول عشان تشوف آخر نسخة", 0, "cancelled");
+    }
+    baseSha = remote.sha;
+  }
 
-    const res = await fetch(DATA_API, {
+  const res = await ghRequest(DATA_API, async (attempt) => {
+    // كل محاولة بتجيب أحدث sha (أول محاولة بتستخدم اللي قريناه فوق)
+    const latest = attempt === 1 ? remote : await fetchRemote(false);
+    currentSha = latest.sha;
+    return {
       method: "PUT",
       headers: { ...ghHeaders(), "Content-Type": "application/json" },
-      cache: "no-store",
       body: JSON.stringify({
         message: "تحديث بيانات Maxim من لوحة التحكم",
-        content: utf8ToBase64(newContent),
-        sha: currentSha,
+        content: encoded,
+        sha: latest.sha,
         branch: GITHUB_BRANCH
       })
-    });
-    const out = await res.json().catch(() => ({}));
+    };
+  }, { label: "حفظ البيانات" });
 
-    if (res.ok) {
-      currentSha = out && out.content ? out.content.sha : currentSha;
-      return;
-    }
-
-    const msg = (out && out.message) || "";
-    const isShaConflict = res.status === 409 || /does not match/i.test(msg);
-    if (isShaConflict && attempt === 1) continue; // نعيد المحاولة مرة بالرقم الجديد
-
-    throw new Error(msg || ("خطأ في الحفظ (كود " + res.status + ")"));
-  }
+  const newSha = res.data && res.data.content && res.data.content.sha;
+  currentSha = newSha || currentSha;
+  baseSha = newSha || null;
 }
 
 async function uploadImageToGitHub(base64Content, fileName) {
   const path = `${IMAGES_PATH}/${fileName}`;
-  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
-  let sha = null;
-  try {
-    const check = await fetch(`${url}?ref=${GITHUB_BRANCH}`, { headers: ghHeaders() });
-    if (check.ok) {
-      const info = await check.json();
-      sha = info.sha;
+  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodePath(path)}`;
+
+  await ghRequest(url, async (attempt, lastErr) => {
+    const body = {
+      message: "رفع صورة: " + fileName,
+      content: base64Content,
+      branch: GITHUB_BRANCH
+    };
+    // أسماء الصور فريدة، فمش محتاجين نفحص وجودها قبل كل رفع (بيوفر طلب لكل صورة).
+    // لو GitHub قال إن الملف موجود فعلاً (422) نجيب الـ sha ونعيد.
+    if (lastErr && lastErr.status === 422) {
+      const chk = await ghRequest(`${url}?ref=${GITHUB_BRANCH}&t=${Date.now()}`,
+        () => ({ headers: ghHeaders() }),
+        { allow404: true, attempts: 2, label: "فحص الصورة" });
+      if (chk.data && chk.data.sha) body.sha = chk.data.sha;
     }
-  } catch (e) {}
-  const body = {
-    message: "رفع صورة: " + fileName,
-    content: base64Content,
-    branch: GITHUB_BRANCH
-  };
-  if (sha) body.sha = sha;
-  const res = await fetch(url, {
-    method: "PUT",
-    headers: { ...ghHeaders(), "Content-Type": "application/json" },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || "Upload failed");
-  }
-  return `${pagesBaseUrl()}/${IMAGES_PATH}/${fileName}`;
+    return {
+      method: "PUT",
+      headers: { ...ghHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    };
+  }, { label: "رفع الصورة" });
+
+  return `${pagesBaseUrl()}/${encodePath(IMAGES_PATH)}/${encodeURIComponent(fileName)}`;
 }
 
 // ============================================================
@@ -262,12 +419,12 @@ async function login() {
     FOLDER_PATH = prevFolder;
     recomputeGithubPaths();
 
-    if (e.message === "UNAUTHORIZED") {
+    if (e && e.kind === "auth") {
       $("loginErr").textContent = "التوكن غير صحيح أو منتهي الصلاحية، أو مفيش صلاحية Push على الريبو ده";
-    } else if (e.message && e.message.includes("404")) {
-      $("loginErr").textContent = "مفيش ملف site-data.json في الريبو/الفولدر ده — تأكد من الأسماء";
+    } else if (e && e.kind === "notfound") {
+      $("loginErr").textContent = "مفيش ملف site-data.json في الريبو/الفولدر ده (أو التوكن مالوش صلاحية على الريبو) — تأكد من الأسماء والتوكن";
     } else {
-      $("loginErr").textContent = "خطأ: " + e.message;
+      $("loginErr").textContent = "خطأ: " + errMsg(e);
     }
     $("loginBtn").textContent = "🔓 دخول";
     $("loginBtn").disabled = false;
@@ -307,7 +464,7 @@ $("reloadBtn").onclick = async () => {
     renderAll();
     showStatus("تم التحديث ✅", "ok");
   } catch (e) {
-    showStatus("فشل التحديث: " + e.message, "err");
+    showStatus("فشل التحديث: " + errMsg(e), "err");
   }
   hideLoading();
 };
@@ -326,10 +483,15 @@ function setSaveButtonsDisabled(disabled) {
 
 async function saveAll() {
   if (isSaving) return;       // يمنع الضغط المزدوج
+  if (typeof navigator !== "undefined" && navigator.onLine === false) {
+    showStatus("مفيش اتصال بالإنترنت دلوقتي — التعديلات لسه عندك، اضغط حفظ بعد ما النت يرجع", "err");
+    return;
+  }
   isSaving = true;
   setSaveButtonsDisabled(true);
   showLoading("جاري حفظ التعديلات...");
   let failed = false;
+  saveStage = "";
   try {
     // ١) الصور المميزة
     if (pendingFeatured.length > 0) {
@@ -337,10 +499,10 @@ async function saveAll() {
       const total = pendingFeatured.length;
       let done = 0;
       while (pendingFeatured.length > 0) {
+        saveStage = `رفع الصور المميزة (${done + 1} من ${total})`;
         showLoading(`جاري رفع الصور المميزة (${++done} من ${total})...`);
         const file = pendingFeatured[0];
-        const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-        const fileName = `featured_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`;
+        const fileName = `featured_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.jpg`;
         const b64 = await compressImage(file);
         const url = await uploadImageToGitHub(b64, fileName);
         storeData.featured.push(url);
@@ -352,10 +514,10 @@ async function saveAll() {
     if (Object.keys(pendingOffers).length > 0) {
       if (!storeData.offers) storeData.offers = [];
       for (const offerId of Object.keys(pendingOffers)) {
+        saveStage = "رفع صور العروض";
         showLoading("جاري رفع صور العروض...");
         const file = pendingOffers[offerId];
-        const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-        const fileName = `offer_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`;
+        const fileName = `offer_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.jpg`;
         const b64 = await compressImage(file);
         const url = await uploadImageToGitHub(b64, fileName);
         const offer = storeData.offers.find(o => o.id === offerId);
@@ -367,18 +529,21 @@ async function saveAll() {
     // ٣) صور المنتجات
     const pendingCount = Object.values(pendingImages).reduce((a, arr) => a + arr.length, 0);
     if (pendingCount > 0) {
+      saveStage = "رفع صور المنتجات";
       showLoading(`جاري رفع ${pendingCount} صورة منتج...`);
       await uploadAllPendingImages();
     }
 
     // ٤) حفظ JSON
+    saveStage = "حفظ البيانات";
     showLoading("جاري حفظ البيانات على GitHub...");
     await saveDataToGitHub();
     showStatus("تم الحفظ ✅ التحديث هيظهر خلال دقيقة", "ok");
   } catch (e) {
     failed = true;
-    const reason = (e && e.message) ? e.message : String(e || "سبب غير معروف");
-    showStatus("فشل الحفظ: " + reason, "err");
+    const reason = errMsg(e);
+    const hint = (e && e.kind === "cancelled") ? "" : " — تعديلاتك لسه موجودة في الصفحة، اضغط حفظ تاني (ما تعملش Refresh)";
+    showStatus("فشل الحفظ" + (saveStage ? " (" + saveStage + ")" : "") + ": " + reason + hint, "err");
   }
   hideLoading();
   if (failed) {
@@ -388,6 +553,13 @@ async function saveAll() {
   isSaving = false;
   setSaveButtonsDisabled(false);
 }
+
+let saveStage = "";
+
+// تحذير لو حاول يقفل الصفحة أثناء الحفظ
+window.addEventListener("beforeunload", (e) => {
+  if (isSaving) { e.preventDefault(); e.returnValue = ""; }
+});
 
 $("saveBtn").onclick = saveAll;
 $("saveBtnBottom").onclick = saveAll;
@@ -410,8 +582,7 @@ async function uploadAllPendingImages() {
 
     while (files.length > 0) {
       const file = files[0];
-      const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-      const fileName = `${productId}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`;
+      const fileName = `${productId}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.jpg`;
       const b64 = await compressImage(file);
       const url = await uploadImageToGitHub(b64, fileName);
       product.images.push(url);
@@ -543,7 +714,7 @@ function renderFeaturedSection() {
     del.textContent = "✕";
     del.onclick = () => { pendingFeatured.splice(i, 1); renderFeaturedSection(); };
     const badge = document.createElement("div");
-    badge.style.cssText = "position:absolute;bottom:4px;left:4px;background:var(--gold);color:#fff;font-size:0.7rem;padding:3px 8px;border-radius:6px;font-weight:900";
+    badge.style.cssText = "position:absolute;bottom:4px;left:4px;background:var(--gold);color:#140a00;font-size:0.7rem;padding:3px 8px;border-radius:6px;font-weight:900";
     badge.textContent = "قيد الرفع";
     thumb.appendChild(img);
     thumb.appendChild(del);
@@ -657,7 +828,7 @@ function buildOfferCard(offer, idx) {
     imgBox.appendChild(del);
 
     const badge = document.createElement("div");
-    badge.style.cssText = "position:absolute;bottom:6px;right:6px;background:var(--gold);color:#fff;font-size:0.65rem;padding:3px 8px;border-radius:6px;font-weight:900;z-index:2";
+    badge.style.cssText = "position:absolute;bottom:6px;right:6px;background:var(--gold);color:#140a00;font-size:0.65rem;padding:3px 8px;border-radius:6px;font-weight:900;z-index:2";
     badge.textContent = "قيد الرفع";
     imgBox.appendChild(badge);
   } else if (offer.image) {
@@ -836,14 +1007,13 @@ function buildZoneCard(cat, idx) {
     showLoading("جاري رفع صورة القسم...");
     try {
       const b64 = await compressImage(f);
-      const ext = (f.name.split(".").pop() || "jpg").toLowerCase();
-      const fileName = `cat_${cat.id}_${Date.now()}.${ext}`;
+      const fileName = `cat_${cat.id}_${Date.now()}.jpg`;
       const url = await uploadImageToGitHub(b64, fileName);
       cat.homeImg = url;
       renderZones();
       showStatus("تم رفع الصورة ✅ لا تنسَ الحفظ", "ok");
     } catch (err) {
-      showStatus("فشل الرفع: " + err.message, "err");
+      showStatus("فشل الرفع: " + errMsg(err), "err");
     }
     hideLoading();
   };
@@ -962,6 +1132,48 @@ function fieldRow(label, value, onChange) {
 // المقاسات
 // ============================================================
 const SIZE_PRESETS = ["S", "M", "L", "XL", "XXL", "XXXL"];
+// البنطلونات والجينز: مقاسات الخصر من 26 وطالع
+const PANTS_PRESETS = Array.from({ length: 25 }, (_, i) => String(26 + i));   // 26 … 50
+const LETTER_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL", "2XL", "3XL", "4XL", "5XL"];
+
+function isPantsCat(cat) {
+  if (!cat) return false;
+  if (cat.id === "pants" || cat.id === "jeans") return true;
+  return /بنطلون|بنطلونات|جينز/.test(cat.name_ar || "");
+}
+
+// يوحّد شكل المقاس: أرقام عربية -> إنجليزية، وحروف كبيرة (xl -> XL)
+function normalizeSizeLabel(raw) {
+  let v = String(raw || "").trim();
+  v = v.replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)))
+       .replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)));
+  if (/^[0-9a-z]+$/i.test(v)) v = v.toUpperCase();
+  return v;
+}
+
+function sizeSortKey(label) {
+  if (/^\d+(\.\d+)?$/.test(label)) return [0, parseFloat(label), 0];              // الأرقام الأول، تصاعديًا
+  const li = LETTER_ORDER.indexOf(label.toUpperCase());
+  if (li !== -1) return [1, li, 0];                                                 // بعدين الحروف بالترتيب
+  return [2, 0, 0];                                                                 // وأي حاجة تانية في الآخر
+}
+
+function sortSizes(arr) {
+  const withIdx = arr.map((x, i) => ({ x, i, k: sizeSortKey(String(x.label)) }));
+  withIdx.sort((a, b) => (a.k[0] - b.k[0]) || (a.k[1] - b.k[1]) || (a.i - b.i));
+  arr.splice(0, arr.length, ...withIdx.map((o) => o.x));
+}
+
+// يضيف مقاس (لو مش موجود) ويرتّب القائمة. يرجّع true لو اتضاف
+function addSizeLabel(prod, label) {
+  const v = normalizeSizeLabel(label);
+  if (!v) return false;
+  if (!prod.sizes) prod.sizes = [];
+  if (prod.sizes.some((s) => String(s.label).toUpperCase() === v.toUpperCase())) return false;
+  prod.sizes.push({ label: v, price: 0 });
+  sortSizes(prod.sizes);
+  return true;
+}
 const SHOE_PRESETS = ["40", "41", "42", "43", "44", "45", "46"];
 const KIDS_PRESETS = ["2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y"];
 
@@ -1232,7 +1444,7 @@ function buildImagesSection(prod, rerender, cat) {
         rerender();
       };
       const badge = document.createElement("div");
-      badge.style.cssText = "position:absolute;bottom:4px;left:4px;background:var(--gold);color:#fff;font-size:0.7rem;padding:3px 8px;border-radius:6px;font-weight:900";
+      badge.style.cssText = "position:absolute;bottom:4px;left:4px;background:var(--gold);color:#140a00;font-size:0.7rem;padding:3px 8px;border-radius:6px;font-weight:900";
       badge.textContent = "قيد الرفع";
       thumb.appendChild(img);
       thumb.appendChild(del);
@@ -1348,6 +1560,7 @@ function buildSizesSection(prod, rerender, cat) {
   let presets = SIZE_PRESETS;
   if (cat && cat.id === "sneakers") presets = SHOE_PRESETS;
   else if (cat && cat.id === "boxers") presets = SIZE_PRESETS;
+  else if (isPantsCat(cat)) presets = PANTS_PRESETS;
 
   const chipsWrap1 = document.createElement("div");
   chipsWrap1.className = "size-chips";
@@ -1359,7 +1572,7 @@ function buildSizesSection(prod, rerender, cat) {
     chip.onclick = () => {
       const existingIdx = prod.sizes.findIndex(s => s.label === sz);
       if (existingIdx !== -1) prod.sizes.splice(existingIdx, 1);
-      else prod.sizes.push({ label: sz, price: 0 });
+      else addSizeLabel(prod, sz);
       rerender();
     };
     chipsWrap1.appendChild(chip);
@@ -1373,7 +1586,9 @@ function buildSizesSection(prod, rerender, cat) {
 
   const chipsWrap2 = document.createElement("div");
   chipsWrap2.className = "size-chips";
-  const allExtras = [...new Set([...SHOE_PRESETS, ...KIDS_PRESETS, "Standard", "One Size"])];
+  const allExtras = isPantsCat(cat)
+    ? [...SIZE_PRESETS, "Standard", "One Size"]
+    : [...new Set([...SHOE_PRESETS, ...KIDS_PRESETS, "Standard", "One Size"])];
   allExtras.forEach(sz => {
     const chip = document.createElement("button");
     chip.className = "size-chip";
@@ -1384,32 +1599,96 @@ function buildSizesSection(prod, rerender, cat) {
     chip.onclick = () => {
       const existingIdx = prod.sizes.findIndex(s => s.label === sz);
       if (existingIdx !== -1) prod.sizes.splice(existingIdx, 1);
-      else prod.sizes.push({ label: sz, price: 0 });
+      else addSizeLabel(prod, sz);
       rerender();
     };
     chipsWrap2.appendChild(chip);
   });
   wrap.appendChild(chipsWrap2);
 
-  const customWrap = document.createElement("div");
-  customWrap.style.cssText = "display:flex;gap:8px;margin-top:14px";
+  // ===== إضافة مقاسات يدويًا =====
+  const addBox = document.createElement("div");
+  addBox.className = "size-add-box";
+
+  const boxTitle = document.createElement("div");
+  boxTitle.className = "sab-title";
+  boxTitle.textContent = "✍️ إضافة مقاس يدويًا";
+  addBox.appendChild(boxTitle);
+
+  const addRow = document.createElement("div");
+  addRow.className = "size-add-row";
   const customInput = document.createElement("input");
   customInput.type = "text";
-  customInput.placeholder = "مقاس مخصص (مثال: 4XL)";
-  customInput.style.flex = "1";
+  customInput.placeholder = "مثال: 26, 27 أو 4XL";
   const customBtn = document.createElement("button");
+  customBtn.type = "button";
   customBtn.className = "btn-secondary";
   customBtn.textContent = "+ إضافة";
-  customBtn.onclick = () => {
-    const v = customInput.value.trim();
-    if (!v) return;
-    if (!prod.sizes.some(s => s.label === v)) prod.sizes.push({ label: v, price: 0 });
+  const submitCustom = () => {
+    const parts = customInput.value.split(/[,،;\n\s]+/).map((x) => x.trim()).filter(Boolean);
+    if (parts.length === 0) return;
+    let added = 0;
+    parts.forEach((p) => { if (addSizeLabel(prod, p)) added++; });
     customInput.value = "";
+    if (added === 0) showStatus("المقاسات دي موجودة بالفعل", "err");
     rerender();
   };
-  customWrap.appendChild(customInput);
-  customWrap.appendChild(customBtn);
-  wrap.appendChild(customWrap);
+  customBtn.onclick = submitCustom;
+  customInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); submitCustom(); }
+  });
+  addRow.appendChild(customInput);
+  addRow.appendChild(customBtn);
+  addBox.appendChild(addRow);
+
+  // مدى من رقم لرقم (مثال: من 30 إلى 44 كل 2)
+  const rangeRow = document.createElement("div");
+  rangeRow.className = "size-range-row";
+  const mkField = (labelText, value) => {
+    const f = document.createElement("div");
+    f.className = "sr-field";
+    const l = document.createElement("label");
+    l.textContent = labelText;
+    const i = document.createElement("input");
+    i.type = "text";            // text عشان الأرقام العربي (٢٦) تتقبل وتتحول لإنجليزي
+    i.inputMode = "numeric";
+    i.value = value;
+    f.appendChild(l);
+    f.appendChild(i);
+    rangeRow.appendChild(f);
+    return i;
+  };
+  const fromInput = mkField("من", isPantsCat(cat) ? "26" : "");
+  const toInput = mkField("إلى", isPantsCat(cat) ? "40" : "");
+  const stepInput = mkField("كل", "1");
+  const rangeBtn = document.createElement("button");
+  rangeBtn.type = "button";
+  rangeBtn.className = "btn-secondary";
+  rangeBtn.textContent = "+ إضافة المدى";
+  rangeBtn.onclick = () => {
+    const from = parseInt(normalizeSizeLabel(fromInput.value), 10);
+    const to = parseInt(normalizeSizeLabel(toInput.value), 10);
+    const step = Math.max(1, parseInt(normalizeSizeLabel(stepInput.value), 10) || 1);
+    if (isNaN(from) || isNaN(to) || from > to) {
+      showStatus("اكتب مدى صحيح (من أصغر من أو يساوي إلى)", "err");
+      return;
+    }
+    if (Math.floor((to - from) / step) + 1 > 60) {
+      showStatus("المدى كبير جدًا (أقصى 60 مقاس في المرة)", "err");
+      return;
+    }
+    for (let n = from; n <= to; n += step) addSizeLabel(prod, String(n));
+    rerender();
+  };
+  rangeRow.appendChild(rangeBtn);
+  addBox.appendChild(rangeRow);
+
+  const addHint = document.createElement("div");
+  addHint.className = "size-add-hint";
+  addHint.textContent = "تقدر تكتب أكتر من مقاس بفاصلة، أو تحدد مدى كامل. المقاسات بتتضاف مرتبة تلقائيًا (الأرقام ثم الحروف)، والأرقام العربي بتتحول لإنجليزي.";
+  addBox.appendChild(addHint);
+
+  wrap.appendChild(addBox);
 
   return wrap;
 }
