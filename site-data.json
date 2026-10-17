@@ -1073,16 +1073,8 @@
           "name_en": "Cargo pants",
           "desc_ar": "بنطلون كارجو (هينقلك في حته تانيه بخامته الناعمه)",
           "desc_en": "Adidas olive green pants",
-          "images": [
-            "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=800&q=80",
-            "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&q=80",
-            "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80"
-          ],
-          "colors": [
-            "زيتي",
-            "أسود",
-            "رمادي"
-          ],
+          "images": [],
+          "colors": [],
           "sizes": [
             {
               "label": "M",
