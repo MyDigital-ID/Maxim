@@ -982,18 +982,16 @@
       "products": [
         {
           "id": "pt1",
-          "name_ar": "بنطال Adidas رمادي",
-          "name_en": "Adidas Gray Pants",
+          "name_ar": "بنطالون كارجو",
+          "name_en": "Cargo Pants ",
           "desc_ar": "بنطال Adidas رياضي بخامة قطنية مريحة",
           "desc_en": "Adidas comfortable cotton pants",
           "images": [
-            "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80",
             "https://mydigital-id.github.io/Maxim/assets/uploads/pt1_1792264925906_8oy6.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/pt1_1792264928925_rj42.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/pt1_1792264932076_diiq.jpg"
           ],
           "colors": [
-            "رمادي",
             "بني",
             "بيج",
             "أسود"
