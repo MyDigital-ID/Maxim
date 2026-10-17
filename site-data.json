@@ -969,7 +969,7 @@
       "icon": "👖",
       "name_ar": "بنطلونات",
       "name_en": "Pants",
-      "homeImg": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/cat_pants_1792267668365.jpg",
       "visible": true,
       "colors": [
         "أسود",
@@ -1234,13 +1234,9 @@
           "desc_ar": "سويت بانت قطن مريح للاستخدام اليومي",
           "desc_en": "Comfortable daily cotton sweatpants",
           "images": [
-            "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&q=80",
-            "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=800&q=80",
             "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80"
           ],
           "colors": [
-            "أسود",
-            "رمادي",
             "كحلي"
           ],
           "sizes": [
@@ -1273,21 +1269,29 @@
         },
         {
           "id": "sp2",
-          "name_ar": "سويت بانت رمادي",
-          "name_en": "Gray Sweatpants",
-          "desc_ar": "سويت بانت رمادي بخامة قطنية ناعمة",
+          "name_ar": "سويت بانت قطن ناعم",
+          "name_en": "Sweatpants",
+          "desc_ar": "سويت بانز ر بخامة قطنية ناعمة",
           "desc_en": "Soft cotton gray sweatpants",
           "images": [
-            "https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=800&q=80",
-            "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&q=80",
-            "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/sp2_1792268140512_6yv4.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/sp2_1792268144301_q0kp.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/sp2_1792268150395_g2lq.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/sp2_1792268156369_tlrj.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/sp2_1792268162541_aitg.jpg"
           ],
           "colors": [
-            "رمادي",
-            "أسود",
-            "بيج"
+            "بيج",
+            "رمادي فاتح",
+            "كريمي",
+            "رصاصي",
+            "أسود"
           ],
           "sizes": [
+            {
+              "label": "S",
+              "price": 0
+            },
             {
               "label": "M",
               "price": 400,
@@ -1307,6 +1311,10 @@
               "label": "XXL",
               "price": 500,
               "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 0
             }
           ]
         }
