@@ -1087,28 +1087,24 @@
           ],
           "sizes": [
             {
-              "label": "S",
-              "price": 0
-            },
-            {
               "label": "M",
-              "price": 550,
+              "price": 799,
               "offerPrice": 0
             },
             {
               "label": "L",
-              "price": 580,
+              "price": 799,
               "offerPrice": 0
             },
             {
               "label": "XL",
-              "price": 620,
+              "price": 799,
               "offerPrice": 0
             },
             {
               "label": "XXL",
               "price": 660,
-              "offerPrice": 0
+              "offerPrice": 799
             }
           ]
         }
