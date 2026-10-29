@@ -1108,6 +1108,308 @@
               "offerPrice": 799
             }
           ]
+        },
+        {
+          "id": "pm_cargo",
+          "name_ar": "بنطلون كارجو",
+          "name_en": "Cargo Pants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np001_cg.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np058_cg.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np002_cg.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np057_cg.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np003_cg.jpg"
+          ],
+          "colors": [
+            "أسود",
+            "أسود",
+            "زيتي",
+            "زيتي",
+            "كاكي"
+          ],
+          "sizes": [
+            {
+              "label": "S",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 850,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_linen",
+          "name_ar": "بنطلون كتان",
+          "name_en": "Linen Pants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np010_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np044_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np011_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np012_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np013_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np043_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np045_kt.jpg"
+          ],
+          "colors": [
+            "بترولي",
+            "بترولي",
+            "بيج فاتح",
+            "أسود",
+            "أسود",
+            "أزرق",
+            "بيج"
+          ],
+          "sizes": [
+            {
+              "label": "30",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "32",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "34",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "36",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "38",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "S",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 750,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_import",
+          "name_ar": "بنطلون رجالي مستورد",
+          "name_en": "Imported Men's Pants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np020_im.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np021_im.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np024_im.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np022_im.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np023_im.jpg"
+          ],
+          "colors": [
+            "كاكي",
+            "زيتي",
+            "زيتي",
+            "رمادي فاتح",
+            "رمادي غامق"
+          ],
+          "sizes": [
+            {
+              "label": "S",
+              "price": 2650,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 2650,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 2650,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 2650,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 2650,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 2650,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_mens",
+          "name_ar": "بنطلون رجالي",
+          "name_en": "Men's Pants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np025_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np055_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np026_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np032_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np034_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np027_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np040_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np042_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np053_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np028_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np029_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np030_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np031_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np033_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np035_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np037_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np036_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np038_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np039_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np041_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np052_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np054_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np056_pn.jpg"
+          ],
+          "colors": [
+            "بيج",
+            "بيج",
+            "أخضر غامق",
+            "أخضر غامق",
+            "أخضر غامق",
+            "أسود",
+            "أسود",
+            "أسود",
+            "أسود",
+            "بيج غامق",
+            "بني",
+            "بني",
+            "زيتي",
+            "بترولي",
+            "رمادي فاتح",
+            "رمادي فاتح",
+            "بني غامق",
+            "بني غامق",
+            "رصاصي",
+            "كحلي",
+            "كاكي",
+            "بيج فاتح",
+            "رمادي"
+          ],
+          "sizes": [
+            {
+              "label": "30",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "32",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "34",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "36",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "38",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "S",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 750,
+              "offerPrice": 0
+            }
+          ]
         }
       ]
     },
@@ -1318,6 +1620,175 @@
             {
               "label": "XXXL",
               "price": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_stwd",
+          "name_ar": "سويت بانتس STWD",
+          "name_en": "STWD Sweatpants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np004_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np008_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np048_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np005_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np050_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np006_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np047_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np007_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np049_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np060_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np009_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np046_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np051_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np059_st.jpg"
+          ],
+          "colors": [
+            "أسود",
+            "أسود",
+            "أسود",
+            "بيج",
+            "بيج",
+            "أوف وايت",
+            "أوف وايت",
+            "رمادي فاتح",
+            "رمادي فاتح",
+            "رمادي فاتح",
+            "رمادي",
+            "رمادي ميلانج",
+            "فحمي",
+            "رمادي غامق"
+          ],
+          "sizes": [
+            {
+              "label": "S",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 850,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_plain",
+          "name_ar": "سويت بانتس سادة",
+          "name_en": "Plain Sweatpants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np015_sd.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np016_sd.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np017_sd.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np018_sd.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np019_sd.jpg"
+          ],
+          "colors": [
+            "أخضر",
+            "أسود",
+            "رمادي",
+            "أخضر زيتي",
+            "بني"
+          ],
+          "sizes": [
+            {
+              "label": "S",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 850,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 850,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_hollister",
+          "name_ar": "سويت بانتس Hollister",
+          "name_en": "Hollister Sweatpants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np014_ho.jpg"
+          ],
+          "colors": [
+            "بيج جملي"
+          ],
+          "sizes": [
+            {
+              "label": "S",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 750,
+              "offerPrice": 0
             }
           ]
         }
