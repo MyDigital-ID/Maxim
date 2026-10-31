@@ -59,213 +59,768 @@
   ],
   "categories": [
     {
-      "id": "tshirts",
-      "icon": "👕",
-      "name_ar": "تيشيرتات رجالي",
-      "name_en": "Men's T-Shirts",
-      "homeImg": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80",
+      "id": "cat_1791675867540_ja4v",
+      "icon": "🛍️",
+      "name_ar": "جواكت",
+      "name_en": "",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/cat_cat_1791675867540_ja4v_1792116557979.jpg",
       "visible": true,
       "colors": [
-        "أبيض",
         "أسود",
+        "أبيض",
+        "زيتي فاتح",
         "بني",
-        "بيج فاتح",
-        "بيج",
-        "أزرق",
-        "لبني",
-        "أخضر",
-        "زيتي",
-        "أحمر",
-        "أصفر",
-        "رمادي",
         "كحلي",
-        "برتقالي"
+        "زيتي",
+        "بيج وأسود",
+        "رمادي وأسود",
+        "رمادي فاتح وأسود",
+        "بيج",
+        "جملي",
+        "أحمر",
+        "أبيض ورمادي",
+        "أخضر زيتي",
+        "بني فاتح"
       ],
       "products": [
         {
-          "id": "ts1",
-          "name_ar": "تيشيرت OFF أوفر سايز",
-          "name_en": "OFF Oversize T-Shirt",
-          "desc_ar": "تيشيرت أوفر سايز بخامة قطنية ثقيلة - طبعة OFF",
-          "desc_en": "Oversize heavyweight cotton t-shirt - OFF print",
+          "id": "pj_01",
+          "name_ar": "جاكيت Burberry",
+          "name_en": "Burberry Jacket",
+          "desc_ar": "جاكيت شتوي مبطن بنقشة مربعات",
+          "desc_en": "",
           "images": [
-            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
-            "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80",
-            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
-            "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&q=80"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk001_ja.jpg"
           ],
           "colors": [
-            "أبيض",
-            "أزرق",
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 2950,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_02",
+          "name_ar": "جاكيت جبردين مستورد",
+          "name_en": "Imported Gabardine Jacket",
+          "desc_ar": "تصميم كلاسيكي وسوستة أمامية",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk002_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk003_ja.jpg"
+          ],
+          "colors": [
+            "أسود",
+            "زيتي فاتح"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3750,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_03",
+          "name_ar": "جاكيت T F",
+          "name_en": "T F Jacket",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk004_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk005_ja.jpg"
+          ],
+          "colors": [
+            "بني",
+            "كحلي"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3750,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_07",
+          "name_ar": "فيست تركي ماركات",
+          "name_en": "Turkish Brand Vest",
+          "desc_ar": "تصميم مبطن وجيوب بسوستة",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk011_ja.jpg"
+          ],
+          "colors": [
+            "كحلي"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 1650,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 1650,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 1650,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 1650,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_08",
+          "name_ar": "جاكيت Men",
+          "name_en": "Men Jacket",
+          "desc_ar": "باتشات مميزة وجيوب بسوستة",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk012_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk013_ja.jpg"
+          ],
+          "colors": [
+            "زيتي",
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 2950,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_09",
+          "name_ar": "جاكيت ماركات 22",
+          "name_en": "Brand 22 Jacket",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk014_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk024_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk025_ja.jpg"
+          ],
+          "colors": [
+            "بيج وأسود",
+            "رمادي وأسود",
+            "رمادي فاتح وأسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 2750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 2750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 2750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 2750,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_10",
+          "name_ar": "جاكيت فرو",
+          "name_en": "Fur Jacket",
+          "desc_ar": "خامة تيدي وياقة عريضة وتطريز أزرق",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk015_ja.jpg"
+          ],
+          "colors": [
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3200,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_13",
+          "name_ar": "جاكيت Loro Piana",
+          "name_en": "Loro Piana Jacket",
+          "desc_ar": "ياقة كلاسيكية وجيوب أمامية",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk026_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk027_ja.jpg"
+          ],
+          "colors": [
             "بني",
             "أسود"
           ],
           "sizes": [
             {
-              "label": "S",
-              "price": 350,
-              "offerPrice": 298
-            },
-            {
               "label": "M",
-              "price": 350,
-              "offerPrice": 298
+              "price": 3950,
+              "offerPrice": 0
             },
             {
               "label": "L",
-              "price": 370,
-              "offerPrice": 314
+              "price": 3950,
+              "offerPrice": 0
             },
             {
               "label": "XL",
-              "price": 390,
-              "offerPrice": 332
+              "price": 3950,
+              "offerPrice": 0
             },
             {
               "label": "XXL",
-              "price": 420,
-              "offerPrice": 357
-            },
-            {
-              "label": "XXXL",
-              "price": 450,
-              "offerPrice": 382
+              "price": 3950,
+              "offerPrice": 0
             }
           ]
         },
         {
-          "id": "ts2",
-          "name_ar": "تيشيرت OFF بني محروق",
-          "name_en": "OFF Burnt Brown T-Shirt",
-          "desc_ar": "تيشيرت بلون بني محروق - طبعة OFF بتأثير مميز",
-          "desc_en": "Burnt brown t-shirt - OFF print",
+          "id": "pj_14",
+          "name_ar": "جاكيت Cn-Homme",
+          "name_en": "Cn-Homme Jacket",
+          "desc_ar": "",
+          "desc_en": "",
           "images": [
-            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
-            "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=800&q=80",
-            "https://images.unsplash.com/photo-1564859228273-274232fdb516?w=800&q=80"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk028_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk030_ja.jpg"
+          ],
+          "colors": [
+            "بيج",
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3950,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_16",
+          "name_ar": "جاكيت Prada casual",
+          "name_en": "Prada Casual Jacket",
+          "desc_ar": "تصميم شتوي مبطن",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk031_ja.jpg"
+          ],
+          "colors": [
+            "جملي"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3950,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_17",
+          "name_ar": "جاكيت breitsh House",
+          "name_en": "Breitsh House Jacket",
+          "desc_ar": "تصميم رياضي بغطاء رأس",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk032_ja.jpg"
+          ],
+          "colors": [
+            "أحمر"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 1500,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 1500,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 1500,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 1500,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_18",
+          "name_ar": "جاكيت GUCCI",
+          "name_en": "GUCCI Jacket",
+          "desc_ar": "شعار دائري على الصدر",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk033_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk034_ja.jpg"
+          ],
+          "colors": [
+            "أبيض",
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 2950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 2950,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_19",
+          "name_ar": "جاكيت Water proof",
+          "name_en": "Water Proof Jacket",
+          "desc_ar": "ياقة كلاسيكية وإغلاق أمامي",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk035_ja.jpg"
+          ],
+          "colors": [
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3950,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3950,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_20",
+          "name_ar": "جاكيت POLO مبطن",
+          "name_en": "POLO Padded Jacket",
+          "desc_ar": "جاكيت مبطن بنقشة مربعات وياقة بارزة وتطريز POLO.",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk036_ja.jpg"
+          ],
+          "colors": [
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3200,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_21",
+          "name_ar": "جاكيت JINHAOUIPAL",
+          "name_en": "JINHAOUIPAL Jacket",
+          "desc_ar": "جاكيت شتوي بغطاء رأس وجيوب جانبية بسوستة وتفاصيل عملية.",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk037_ja.jpg"
+          ],
+          "colors": [
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 3200,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 3200,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_23",
+          "name_ar": "جاكيت MIU مطبوع",
+          "name_en": "MIU Printed Jacket",
+          "desc_ar": "جاكيت مبطن بنقشة مموهة وشعار MIU.",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk043_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk044_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk045_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk046_ja.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk047_ja.jpg"
+          ],
+          "colors": [
+            "أبيض ورمادي",
+            "أخضر زيتي",
+            "بني فاتح",
+            "بني",
+            "كحلي"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 1450,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 1450,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 1450,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 1450,
+              "offerPrice": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outfit-sets",
+      "icon": "🧥",
+      "name_ar": "جواكت جلد",
+      "name_en": "Leather Jackets",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/jk029_lt.jpg",
+      "visible": true,
+      "colors": [
+        "أسود",
+        "أبيض",
+        "رمادي",
+        "كحلي",
+        "بيج",
+        "بني",
+        "بني غامق",
+        "بيج وبني"
+      ],
+      "products": [
+        {
+          "id": "pj_15",
+          "name_ar": "جاكيت Leather Lora",
+          "name_en": "Leather Lora Jacket",
+          "desc_ar": "تصميم مبطن وياقة مرتفعة",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk029_lt.jpg"
+          ],
+          "colors": [
+            "بني غامق"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 4750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 4750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 4750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 4750,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_22",
+          "name_ar": "جاكيت جلد zara",
+          "name_en": "Zara Leather Jacket",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk038_lt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk039_lt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk040_lt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk041_lt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk042_lt.jpg"
           ],
           "colors": [
             "بني",
-            "بيج",
-            "زيتي"
+            "أسود",
+            "أسود",
+            "بني",
+            "بيج وبني"
           ],
           "sizes": [
             {
-              "label": "S",
-              "price": 350,
-              "offerPrice": 0
-            },
-            {
               "label": "M",
-              "price": 350,
+              "price": 1650,
               "offerPrice": 0
             },
             {
               "label": "L",
-              "price": 370,
+              "price": 1650,
               "offerPrice": 0
             },
             {
               "label": "XL",
-              "price": 390,
+              "price": 1650,
               "offerPrice": 0
             },
             {
               "label": "XXL",
-              "price": 420,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
-              "price": 450,
+              "price": 1650,
               "offerPrice": 0
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "coats",
+      "icon": "🧥",
+      "name_ar": "بالطو",
+      "name_en": "Coats",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/jk019_co.jpg",
+      "visible": true,
+      "colors": [
+        "أخضر غامق",
+        "أسود",
+        "رمادي فاتح",
+        "رمادي",
+        "جملي"
+      ],
+      "products": [
         {
-          "id": "ts3",
-          "name_ar": "تيشيرت Pull&Bear بيج",
-          "name_en": "Pull&Bear Beige T-Shirt",
-          "desc_ar": "تيشيرت Pull&Bear بخامة قطنية عالية الجودة",
-          "desc_en": "Pull&Bear premium cotton t-shirt",
+          "id": "pj_12",
+          "name_ar": "بالطو مستورد",
+          "name_en": "Imported Coat",
+          "desc_ar": "",
+          "desc_en": "",
           "images": [
-            "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=800&q=80",
-            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
-            "https://images.unsplash.com/photo-1614499524207-cd5e30ff03d6?w=800&q=80"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk019_co.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk020_co.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk021_co.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk022_co.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk023_co.jpg"
           ],
           "colors": [
-            "بيج",
-            "أبيض",
-            "لبني"
+            "أخضر غامق",
+            "أسود",
+            "رمادي فاتح",
+            "رمادي",
+            "جملي"
           ],
           "sizes": [
             {
               "label": "M",
-              "price": 380,
+              "price": 1800,
               "offerPrice": 0
             },
             {
               "label": "L",
-              "price": 380,
+              "price": 1800,
               "offerPrice": 0
             },
             {
               "label": "XL",
-              "price": 400,
+              "price": 1800,
               "offerPrice": 0
             },
             {
               "label": "XXL",
-              "price": 430,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
-              "price": 460,
-              "offerPrice": 0
-            }
-          ]
-        },
-        {
-          "id": "ts4",
-          "name_ar": "تيشيرت Givenchy سماوي",
-          "name_en": "Givenchy Sky Blue T-Shirt",
-          "desc_ar": "تيشيرت Givenchy بتصميم عصري - لون سماوي",
-          "desc_en": "Givenchy modern design t-shirt - sky blue",
-          "images": [
-            "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80",
-            "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&q=80",
-            "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&q=80"
-          ],
-          "colors": [
-            "لبني",
-            "كحلي",
-            "أبيض"
-          ],
-          "sizes": [
-            {
-              "label": "S",
-              "price": 400,
-              "offerPrice": 0
-            },
-            {
-              "label": "M",
-              "price": 400,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 420,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 450,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 480,
+              "price": 1800,
               "offerPrice": 0
             }
           ]
@@ -635,7 +1190,7 @@
       "icon": "👘",
       "name_ar": "بلوفرات",
       "name_en": "Sweatshirts",
-      "homeImg": "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=600&q=80",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/jk006_ss.jpg",
       "visible": true,
       "colors": [
         "أبيض",
@@ -645,176 +1200,155 @@
         "رمادي",
         "كحلي",
         "زيتي",
-        "أحمر"
+        "أحمر",
+        "أخضر غامق",
+        "أزرق"
       ],
       "products": [
         {
-          "id": "sw1",
-          "name_ar": "بلوفر American Eagle أبيض",
-          "name_en": "American Eagle White Sweatshirt",
-          "desc_ar": "بلوفر American Eagle بخامة وافل مميزة",
-          "desc_en": "American Eagle waffle fabric sweatshirt",
+          "id": "pj_04",
+          "name_ar": "سويت شيرت بسوستة CK",
+          "name_en": "CK Zip Sweatshirt",
+          "desc_ar": "طباعة أمامية وخلفية",
+          "desc_en": "",
           "images": [
-            "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=800&q=80",
-            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
-            "https://images.unsplash.com/photo-1614499524207-cd5e30ff03d6?w=800&q=80"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk006_ss.jpg"
           ],
           "colors": [
-            "أبيض",
-            "بيج",
-            "رمادي"
-          ],
-          "sizes": [
-            {
-              "label": "S",
-              "price": 550,
-              "offerPrice": 0
-            },
-            {
-              "label": "M",
-              "price": 550,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 580,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 620,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 660,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
-              "price": 700,
-              "offerPrice": 0
-            }
-          ]
-        },
-        {
-          "id": "sw2",
-          "name_ar": "بلوفر American Eagle بيج",
-          "name_en": "American Eagle Beige Sweatshirt",
-          "desc_ar": "بلوفر American Eagle بلون بيج فاخر",
-          "desc_en": "American Eagle luxury beige sweatshirt",
-          "images": [
-            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
-            "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=800&q=80",
-            "https://images.unsplash.com/photo-1614499524207-cd5e30ff03d6?w=800&q=80"
-          ],
-          "colors": [
-            "بيج",
-            "أبيض",
-            "بني"
-          ],
-          "sizes": [
-            {
-              "label": "M",
-              "price": 550,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 580,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 620,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 660,
-              "offerPrice": 0
-            }
-          ]
-        },
-        {
-          "id": "sw3",
-          "name_ar": "بلوفر Pullman بني",
-          "name_en": "Pullman Brown Sweater",
-          "desc_ar": "بلوفر Pullman بخامة صوف ناعمة",
-          "desc_en": "Pullman soft wool sweater",
-          "images": [
-            "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
-            "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=800&q=80",
-            "https://images.unsplash.com/photo-1631541909061-71e349d1f203?w=800&q=80"
-          ],
-          "colors": [
-            "بني",
-            "بيج",
-            "زيتي"
-          ],
-          "sizes": [
-            {
-              "label": "M",
-              "price": 650,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 680,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 720,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 770,
-              "offerPrice": 0
-            }
-          ]
-        },
-        {
-          "id": "sw4",
-          "name_ar": "بلوفر Pullman أسود",
-          "name_en": "Pullman Black Sweater",
-          "desc_ar": "بلوفر Pullman بلون أسود فاخر",
-          "desc_en": "Pullman luxury black sweater",
-          "images": [
-            "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&q=80",
-            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
-            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80"
-          ],
-          "colors": [
-            "أسود",
-            "رمادي",
             "أبيض"
           ],
           "sizes": [
             {
-              "label": "S",
-              "price": 650,
-              "offerPrice": 0
-            },
-            {
               "label": "M",
-              "price": 650,
+              "price": 1100,
               "offerPrice": 0
             },
             {
               "label": "L",
-              "price": 680,
+              "price": 1100,
               "offerPrice": 0
             },
             {
               "label": "XL",
-              "price": 720,
+              "price": 1100,
               "offerPrice": 0
             },
             {
               "label": "XXL",
-              "price": 770,
+              "price": 1100,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_05",
+          "name_ar": "سويت شيرت بسوستة NYC",
+          "name_en": "NYC Zip Sweatshirt",
+          "desc_ar": "طباعة أمامية وخلفية",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk007_ss.jpg"
+          ],
+          "colors": [
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 875,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 875,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 875,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 875,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_06",
+          "name_ar": "سويت شيرت سادة",
+          "name_en": "Plain Hooded Sweatshirt",
+          "desc_ar": "كابيشو وجيوب أمامية",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk008_ss.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk009_ss.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk010_ss.jpg"
+          ],
+          "colors": [
+            "أبيض",
+            "أسود",
+            "أخضر غامق"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 975,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 975,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 975,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 975,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_11",
+          "name_ar": "سويت شيرت Polo",
+          "name_en": "Polo Sweatshirt",
+          "desc_ar": "تطريز POLO ورباط أبيض",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk016_ss.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk017_ss.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk018_ss.jpg"
+          ],
+          "colors": [
+            "رمادي",
+            "أسود",
+            "أزرق"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 975,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 975,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 975,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 975,
               "offerPrice": 0
             }
           ]
@@ -833,132 +1367,213 @@
         "لبني",
         "كحلي",
         "أسود",
-        "رمادي"
+        "رمادي",
+        "أوف وايت",
+        "رمادي مغسول",
+        "كحلي غامق"
       ],
       "products": [
         {
-          "id": "jn1",
-          "name_ar": "جينز كلاسيك أزرق",
-          "name_en": "Classic Blue Jeans",
-          "desc_ar": "بنطلون جينز كلاسيك بقصة مستقيمة",
-          "desc_en": "Classic straight-cut blue jeans",
+          "id": "pj_polotojeans",
+          "name_ar": "جينز POLOTO",
+          "name_en": "POLOTO Jeans",
+          "desc_ar": "",
+          "desc_en": "",
           "images": [
-            "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
-            "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80",
-            "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&q=80"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np061_jn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np067_jn.jpg"
           ],
           "colors": [
-            "أزرق",
-            "كحلي",
-            "لبني"
-          ],
-          "sizes": [
-            {
-              "label": "S",
-              "price": 650,
-              "offerPrice": 0
-            },
-            {
-              "label": "M",
-              "price": 650,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 680,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 720,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 770,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
-              "price": 820,
-              "offerPrice": 0
-            }
-          ]
-        },
-        {
-          "id": "jn2",
-          "name_ar": "جينز أسود مودرن",
-          "name_en": "Modern Black Jeans",
-          "desc_ar": "جينز أسود بقصة مودرن عصرية",
-          "desc_en": "Modern black jeans",
-          "images": [
-            "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80",
-            "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
-            "https://images.unsplash.com/photo-1475178626620-a4d074967452?w=800&q=80"
-          ],
-          "colors": [
-            "أسود",
-            "رمادي",
+            "أوف وايت",
             "أزرق"
           ],
           "sizes": [
             {
-              "label": "M",
-              "price": 650,
+              "label": "30",
+              "price": 950,
               "offerPrice": 0
             },
             {
-              "label": "L",
-              "price": 680,
+              "label": "32",
+              "price": 950,
               "offerPrice": 0
             },
             {
-              "label": "XL",
-              "price": 720,
+              "label": "34",
+              "price": 950,
               "offerPrice": 0
             },
             {
-              "label": "XXL",
-              "price": 770,
+              "label": "36",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "38",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "40",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "42",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "44",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "46",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "48",
+              "price": 950,
               "offerPrice": 0
             }
           ]
         },
         {
-          "id": "jn3",
-          "name_ar": "جينز ممزق (Ripped)",
-          "name_en": "Ripped Jeans",
-          "desc_ar": "جينز بتصميم ممزق عصري",
-          "desc_en": "Modern ripped design jeans",
+          "id": "pj_sam",
+          "name_ar": "جينز SAM",
+          "name_en": "SAM Jeans",
+          "desc_ar": "",
+          "desc_en": "",
           "images": [
-            "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&q=80",
-            "https://images.unsplash.com/photo-1475178626620-a4d074967452?w=800&q=80",
-            "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np062_jn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np063_jn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np064_jn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np068_jn.jpg"
           ],
           "colors": [
+            "رمادي مغسول",
+            "كحلي غامق",
             "أزرق",
-            "كحلي",
-            "رمادي"
+            "أسود"
           ],
           "sizes": [
             {
-              "label": "S",
-              "price": 700,
+              "label": "30",
+              "price": 950,
               "offerPrice": 0
             },
             {
-              "label": "M",
-              "price": 700,
+              "label": "32",
+              "price": 950,
               "offerPrice": 0
             },
             {
-              "label": "L",
-              "price": 750,
+              "label": "34",
+              "price": 950,
               "offerPrice": 0
             },
             {
-              "label": "XL",
-              "price": 800,
+              "label": "36",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "38",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "40",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "42",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "44",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "46",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "48",
+              "price": 950,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pj_paulshark",
+          "name_ar": "جينز Paul & Shark",
+          "name_en": "Paul & Shark Jeans",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np065_jn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np066_jn.jpg"
+          ],
+          "colors": [
+            "أزرق",
+            "أسود"
+          ],
+          "sizes": [
+            {
+              "label": "30",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "32",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "34",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "36",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "38",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "40",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "42",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "44",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "46",
+              "price": 950,
+              "offerPrice": 0
+            },
+            {
+              "label": "48",
+              "price": 950,
               "offerPrice": 0
             }
           ]
@@ -1117,46 +1732,37 @@
           "desc_en": "",
           "images": [
             "https://mydigital-id.github.io/Maxim/assets/uploads/np001_cg.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np058_cg.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np002_cg.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np057_cg.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np003_cg.jpg"
           ],
           "colors": [
             "أسود",
-            "أسود",
             "زيتي",
-            "زيتي",
-            "كاكي"
+            "رمادي"
           ],
           "sizes": [
             {
-              "label": "S",
+              "label": "30",
               "price": 850,
               "offerPrice": 0
             },
             {
-              "label": "M",
+              "label": "32",
               "price": 850,
               "offerPrice": 0
             },
             {
-              "label": "L",
+              "label": "34",
               "price": 850,
               "offerPrice": 0
             },
             {
-              "label": "XL",
+              "label": "36",
               "price": 850,
               "offerPrice": 0
             },
             {
-              "label": "XXL",
-              "price": 850,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
+              "label": "38",
               "price": 850,
               "offerPrice": 0
             }
@@ -1170,21 +1776,15 @@
           "desc_en": "",
           "images": [
             "https://mydigital-id.github.io/Maxim/assets/uploads/np010_kt.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np044_kt.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np011_kt.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np012_kt.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np013_kt.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np043_kt.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np045_kt.jpg"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np013_kt.jpg"
           ],
           "colors": [
             "بترولي",
-            "بترولي",
-            "بيج فاتح",
+            "بيج",
             "أسود",
-            "أسود",
-            "أزرق",
-            "بيج"
+            "أسود"
           ],
           "sizes": [
             {
@@ -1209,36 +1809,6 @@
             },
             {
               "label": "38",
-              "price": 750,
-              "offerPrice": 0
-            },
-            {
-              "label": "S",
-              "price": 750,
-              "offerPrice": 0
-            },
-            {
-              "label": "M",
-              "price": 750,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 750,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 750,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 750,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
               "price": 750,
               "offerPrice": 0
             }
@@ -1253,45 +1823,40 @@
           "images": [
             "https://mydigital-id.github.io/Maxim/assets/uploads/np020_im.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np021_im.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np024_im.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np022_im.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np023_im.jpg"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np023_im.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np024_im.jpg"
           ],
           "colors": [
-            "كاكي",
             "زيتي",
-            "زيتي",
+            "رمادي زيتي",
             "رمادي فاتح",
-            "رمادي غامق"
+            "فحمي",
+            "بني"
           ],
           "sizes": [
             {
-              "label": "S",
+              "label": "30",
               "price": 2650,
               "offerPrice": 0
             },
             {
-              "label": "M",
+              "label": "32",
               "price": 2650,
               "offerPrice": 0
             },
             {
-              "label": "L",
+              "label": "34",
               "price": 2650,
               "offerPrice": 0
             },
             {
-              "label": "XL",
+              "label": "36",
               "price": 2650,
               "offerPrice": 0
             },
             {
-              "label": "XXL",
-              "price": 2650,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
+              "label": "38",
               "price": 2650,
               "offerPrice": 0
             }
@@ -1305,53 +1870,129 @@
           "desc_en": "",
           "images": [
             "https://mydigital-id.github.io/Maxim/assets/uploads/np025_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np055_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np026_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np032_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np034_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np027_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np040_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np042_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np053_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np028_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np029_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np030_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np031_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np032_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np033_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np034_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np035_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np037_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np036_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np037_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np038_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np039_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np040_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np041_pn.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np052_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np042_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np053_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np054_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np055_pn.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np056_pn.jpg"
           ],
           "colors": [
+            "بيج رمادي",
+            "بترولي",
+            "أسود",
             "بيج",
-            "بيج",
-            "أخضر غامق",
-            "أخضر غامق",
-            "أخضر غامق",
-            "أسود",
-            "أسود",
-            "أسود",
-            "أسود",
-            "بيج غامق",
-            "بني",
+            "بني غامق",
             "بني",
             "زيتي",
-            "بترولي",
-            "رمادي فاتح",
+            "بترولي غامق",
+            "أزرق",
+            "أسود",
+            "رمادي",
+            "بني",
             "رمادي فاتح",
             "بني غامق",
-            "بني غامق",
-            "رصاصي",
+            "رمادي",
             "كحلي",
-            "كاكي",
-            "بيج فاتح",
-            "رمادي"
+            "كحلي",
+            "أسود",
+            "أسود",
+            "أوف وايت",
+            "أوف وايت",
+            "رمادي فاتح"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 750,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_kitan",
+          "name_ar": "كتان رجالي",
+          "name_en": "Men's Linen",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np043_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np044_kt.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np045_kt.jpg"
+          ],
+          "colors": [
+            "أزرق ملكي",
+            "بترولي",
+            "بيج"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 750,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_cargo_750",
+          "name_ar": "بنطلون كارجو",
+          "name_en": "Cargo Pants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np052_pn.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np057_cg.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np058_cg.jpg"
+          ],
+          "colors": [
+            "زيتي",
+            "زيتي",
+            "أسود"
           ],
           "sizes": [
             {
@@ -1378,35 +2019,219 @@
               "label": "38",
               "price": 750,
               "offerPrice": 0
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tshirts",
+      "icon": "👕",
+      "name_ar": "تيشيرتات رجالي",
+      "name_en": "Men's T-Shirts",
+      "homeImg": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80",
+      "visible": true,
+      "colors": [
+        "أبيض",
+        "أسود",
+        "بني",
+        "بيج فاتح",
+        "بيج",
+        "أزرق",
+        "لبني",
+        "أخضر",
+        "زيتي",
+        "أحمر",
+        "أصفر",
+        "رمادي",
+        "كحلي",
+        "برتقالي"
+      ],
+      "products": [
+        {
+          "id": "ts1",
+          "name_ar": "تيشيرت OFF أوفر سايز",
+          "name_en": "OFF Oversize T-Shirt",
+          "desc_ar": "تيشيرت أوفر سايز بخامة قطنية ثقيلة - طبعة OFF",
+          "desc_en": "Oversize heavyweight cotton t-shirt - OFF print",
+          "images": [
+            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
+            "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80",
+            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
+            "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&q=80"
+          ],
+          "colors": [
+            "أبيض",
+            "أزرق",
+            "بني",
+            "أسود"
+          ],
+          "sizes": [
             {
               "label": "S",
-              "price": 750,
+              "price": 350,
+              "offerPrice": 298
+            },
+            {
+              "label": "M",
+              "price": 350,
+              "offerPrice": 298
+            },
+            {
+              "label": "L",
+              "price": 370,
+              "offerPrice": 314
+            },
+            {
+              "label": "XL",
+              "price": 390,
+              "offerPrice": 332
+            },
+            {
+              "label": "XXL",
+              "price": 420,
+              "offerPrice": 357
+            },
+            {
+              "label": "XXXL",
+              "price": 450,
+              "offerPrice": 382
+            }
+          ]
+        },
+        {
+          "id": "ts2",
+          "name_ar": "تيشيرت OFF بني محروق",
+          "name_en": "OFF Burnt Brown T-Shirt",
+          "desc_ar": "تيشيرت بلون بني محروق - طبعة OFF بتأثير مميز",
+          "desc_en": "Burnt brown t-shirt - OFF print",
+          "images": [
+            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80",
+            "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=800&q=80",
+            "https://images.unsplash.com/photo-1564859228273-274232fdb516?w=800&q=80"
+          ],
+          "colors": [
+            "بني",
+            "بيج",
+            "زيتي"
+          ],
+          "sizes": [
+            {
+              "label": "S",
+              "price": 350,
               "offerPrice": 0
             },
             {
               "label": "M",
-              "price": 750,
+              "price": 350,
               "offerPrice": 0
             },
             {
               "label": "L",
-              "price": 750,
+              "price": 370,
               "offerPrice": 0
             },
             {
               "label": "XL",
-              "price": 750,
+              "price": 390,
               "offerPrice": 0
             },
             {
               "label": "XXL",
-              "price": 750,
+              "price": 420,
               "offerPrice": 0
             },
             {
               "label": "XXXL",
-              "price": 750,
+              "price": 450,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "ts3",
+          "name_ar": "تيشيرت Pull&Bear بيج",
+          "name_en": "Pull&Bear Beige T-Shirt",
+          "desc_ar": "تيشيرت Pull&Bear بخامة قطنية عالية الجودة",
+          "desc_en": "Pull&Bear premium cotton t-shirt",
+          "images": [
+            "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=800&q=80",
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+            "https://images.unsplash.com/photo-1614499524207-cd5e30ff03d6?w=800&q=80"
+          ],
+          "colors": [
+            "بيج",
+            "أبيض",
+            "لبني"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 380,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 380,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 400,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 430,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXXL",
+              "price": 460,
+              "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "ts4",
+          "name_ar": "تيشيرت Givenchy سماوي",
+          "name_en": "Givenchy Sky Blue T-Shirt",
+          "desc_ar": "تيشيرت Givenchy بتصميم عصري - لون سماوي",
+          "desc_en": "Givenchy modern design t-shirt - sky blue",
+          "images": [
+            "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80",
+            "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&q=80",
+            "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&q=80"
+          ],
+          "colors": [
+            "لبني",
+            "كحلي",
+            "أبيض"
+          ],
+          "sizes": [
+            {
+              "label": "S",
+              "price": 400,
+              "offerPrice": 0
+            },
+            {
+              "label": "M",
+              "price": 400,
+              "offerPrice": 0
+            },
+            {
+              "label": "L",
+              "price": 420,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 450,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 480,
               "offerPrice": 0
             }
           ]
@@ -1522,7 +2347,7 @@
       "icon": "🩳",
       "name_ar": "سويت بانتس",
       "name_en": "Men's Sweatpants",
-      "homeImg": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&q=80",
+      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/sp2_1792268140512_6yv4.jpg",
       "visible": true,
       "colors": [
         "أسود",
@@ -1532,46 +2357,6 @@
         "زيتي"
       ],
       "products": [
-        {
-          "id": "sp1",
-          "name_ar": "سويت بانت أسود",
-          "name_en": "Black Sweatpants",
-          "desc_ar": "سويت بانت قطن مريح للاستخدام اليومي",
-          "desc_en": "Comfortable daily cotton sweatpants",
-          "images": [
-            "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80"
-          ],
-          "colors": [
-            "كحلي"
-          ],
-          "sizes": [
-            {
-              "label": "S",
-              "price": 400,
-              "offerPrice": 0
-            },
-            {
-              "label": "M",
-              "price": 400,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 430,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 460,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 500,
-              "offerPrice": 0
-            }
-          ]
-        },
         {
           "id": "sp2",
           "name_ar": "سويت بانت قطن ناعم",
@@ -1631,42 +2416,33 @@
           "desc_en": "",
           "images": [
             "https://mydigital-id.github.io/Maxim/assets/uploads/np004_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np008_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np048_st.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np005_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np050_st.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np006_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np047_st.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np007_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np049_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np060_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np008_st.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np009_st.jpg",
             "https://mydigital-id.github.io/Maxim/assets/uploads/np046_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np051_st.jpg",
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np059_st.jpg"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np047_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np048_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np049_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np050_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np051_st.jpg"
           ],
           "colors": [
             "أسود",
-            "أسود",
-            "أسود",
-            "بيج",
-            "بيج",
             "أوف وايت",
             "أوف وايت",
             "رمادي فاتح",
-            "رمادي فاتح",
-            "رمادي فاتح",
+            "أسود",
             "رمادي",
-            "رمادي ميلانج",
-            "فحمي",
-            "رمادي غامق"
+            "رمادي فاتح",
+            "أوف وايت",
+            "أسود",
+            "رمادي فاتح",
+            "بيج",
+            "أسود"
           ],
           "sizes": [
-            {
-              "label": "S",
-              "price": 850,
-              "offerPrice": 0
-            },
             {
               "label": "M",
               "price": 850,
@@ -1686,10 +2462,40 @@
               "label": "XXL",
               "price": 850,
               "offerPrice": 0
+            }
+          ]
+        },
+        {
+          "id": "pm_hollister",
+          "name_ar": "سويت بانتس Hollister",
+          "name_en": "Hollister Sweatpants",
+          "desc_ar": "",
+          "desc_en": "",
+          "images": [
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np014_ho.jpg"
+          ],
+          "colors": [
+            "جملي"
+          ],
+          "sizes": [
+            {
+              "label": "M",
+              "price": 750,
+              "offerPrice": 0
             },
             {
-              "label": "XXXL",
-              "price": 850,
+              "label": "L",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XL",
+              "price": 750,
+              "offerPrice": 0
+            },
+            {
+              "label": "XXL",
+              "price": 750,
               "offerPrice": 0
             }
           ]
@@ -1708,18 +2514,13 @@
             "https://mydigital-id.github.io/Maxim/assets/uploads/np019_sd.jpg"
           ],
           "colors": [
-            "أخضر",
+            "أخضر زيتي",
             "أسود",
             "رمادي",
-            "أخضر زيتي",
+            "أخضر",
             "بني"
           ],
           "sizes": [
-            {
-              "label": "S",
-              "price": 850,
-              "offerPrice": 0
-            },
             {
               "label": "M",
               "price": 850,
@@ -1737,34 +2538,26 @@
             },
             {
               "label": "XXL",
-              "price": 850,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
               "price": 850,
               "offerPrice": 0
             }
           ]
         },
         {
-          "id": "pm_hollister",
-          "name_ar": "سويت بانتس Hollister",
-          "name_en": "Hollister Sweatpants",
+          "id": "pm_stwd_750",
+          "name_ar": "سويت بانتس STWD",
+          "name_en": "STWD Sweatpants",
           "desc_ar": "",
           "desc_en": "",
           "images": [
-            "https://mydigital-id.github.io/Maxim/assets/uploads/np014_ho.jpg"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np059_st.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/np060_st.jpg"
           ],
           "colors": [
-            "بيج جملي"
+            "كحلي",
+            "رمادي فاتح"
           ],
           "sizes": [
-            {
-              "label": "S",
-              "price": 750,
-              "offerPrice": 0
-            },
             {
               "label": "M",
               "price": 750,
@@ -1782,11 +2575,6 @@
             },
             {
               "label": "XXL",
-              "price": 750,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
               "price": 750,
               "offerPrice": 0
             }
@@ -1888,112 +2676,6 @@
             {
               "label": "XXL",
               "price": 460,
-              "offerPrice": 0
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "outfit-sets",
-      "icon": "🎽",
-      "name_ar": "طقم الخروج",
-      "name_en": "Outfit Sets",
-      "homeImg": "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600&q=80",
-      "visible": true,
-      "colors": [
-        "أسود",
-        "أبيض",
-        "رمادي",
-        "كحلي",
-        "بيج",
-        "بني"
-      ],
-      "products": [
-        {
-          "id": "os1",
-          "name_ar": "طقم خروج تيشيرت + بنطال",
-          "name_en": "T-Shirt + Pants Outfit Set",
-          "desc_ar": "طقم خروج كامل - تيشيرت + بنطال بخامة عالية",
-          "desc_en": "Full outfit set - t-shirt + pants premium",
-          "images": [
-            "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&q=80",
-            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
-            "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80"
-          ],
-          "colors": [
-            "أسود",
-            "أبيض",
-            "بيج"
-          ],
-          "sizes": [
-            {
-              "label": "S",
-              "price": 850,
-              "offerPrice": 0
-            },
-            {
-              "label": "M",
-              "price": 850,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 900,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 950,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 1000,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXXL",
-              "price": 1100,
-              "offerPrice": 0
-            }
-          ]
-        },
-        {
-          "id": "os2",
-          "name_ar": "طقم خروج كامل بلوفر + بنطال",
-          "name_en": "Sweatshirt + Pants Set",
-          "desc_ar": "طقم خروج أنيق - بلوفر + بنطال",
-          "desc_en": "Elegant outfit set - sweatshirt + pants",
-          "images": [
-            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
-            "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&q=80",
-            "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=800&q=80"
-          ],
-          "colors": [
-            "أبيض",
-            "رمادي",
-            "كحلي"
-          ],
-          "sizes": [
-            {
-              "label": "M",
-              "price": 950,
-              "offerPrice": 0
-            },
-            {
-              "label": "L",
-              "price": 1000,
-              "offerPrice": 0
-            },
-            {
-              "label": "XL",
-              "price": 1050,
-              "offerPrice": 0
-            },
-            {
-              "label": "XXL",
-              "price": 1100,
               "offerPrice": 0
             }
           ]
@@ -2390,19 +3072,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": "cat_1791675867540_ja4v",
-      "icon": "🛍️",
-      "name_ar": "جواكت",
-      "name_en": "",
-      "homeImg": "https://mydigital-id.github.io/Maxim/assets/uploads/cat_cat_1791675867540_ja4v_1792116557979.jpg",
-      "visible": true,
-      "colors": [
-        "أسود",
-        "أبيض"
-      ],
-      "products": []
     },
     {
       "id": "cat_1791681013782_e43n",
