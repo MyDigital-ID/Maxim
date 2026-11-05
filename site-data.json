@@ -1215,25 +1215,27 @@
           "desc_ar": "طباعة أمامية وخلفية",
           "desc_en": "",
           "images": [
-            "https://mydigital-id.github.io/Maxim/assets/uploads/jk006_ss.jpg"
+            "https://mydigital-id.github.io/Maxim/assets/uploads/jk006_ss.jpg",
+            "https://mydigital-id.github.io/Maxim/assets/uploads/pj_04_1793885257411_u83x.jpg"
           ],
           "colors": [
-            "أبيض"
+            "أبيض",
+            "برجاندي"
           ],
           "sizes": [
             {
               "label": "M",
-              "price": 1100,
+              "price": 975,
               "offerPrice": 0
             },
             {
               "label": "L",
-              "price": 1100,
+              "price": 975,
               "offerPrice": 0
             },
             {
               "label": "XL",
-              "price": 1100,
+              "price": 975,
               "offerPrice": 0
             },
             {
